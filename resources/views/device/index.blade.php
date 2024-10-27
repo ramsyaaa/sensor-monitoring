@@ -38,38 +38,24 @@
                             </tr>
                         </thead>
                         <tbody class="text-gray-700 text-sm font-light">
+                            @foreach ($data['dataList'] as $item)
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
-                                <td class="py-3 px-6 text-left">1</td>
+                                <td class="py-3 px-6 text-left">{{ $loop->iteration }}</td>
                                 <td class="py-3 px-6 text-left flex gap-4 items-start">
-                                    HK301-DTU-HPI2403H0120239
+                                    {{ $item['deviceName'] ?? '-' }}
                                 </td>
                                 <td class="py-3 px-6 text-left">
-                                    <span class=" text-[16px]">SN:KUYTJ21PUZ5H32KL</span>
+                                    <span class=" text-[16px]">SN:{{ $item['deviceNo'] ?? '-' }}</span>
                                     <br>
-                                    <span>ID：279496</span>
+                                    <span>ID：{{ $item['id'] ?? '-' }}</span>
                                 </td>
                                 <td class="py-3 px-6 text-center flex items-center justify-center gap-2">
-                                    <a href="{{ route('device.show', ['id' => 123]) }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200">Detail</a>
-                                    <a href="{{ route('device.edit', ['id' => 123]) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Edit</a>
+                                    <a href="{{ route('device.show', ['id' => $item['id'] ?? '']) }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200">Detail</a>
+                                    <a href="{{ route('device.edit', ['id' => $item['id'] ?? '']) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Edit</a>
                                     <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200">Delete</button>
                                 </td>
-                            </tr>
-                            <tr class="border-b border-gray-200 hover:bg-gray-100">
-                                <td class="py-3 px-6 text-left">2</td>
-                                <td class="py-3 px-6 text-left flex gap-4 items-start">
-                                    HK301-DTU-HPI2403H0120239
-                                </td>
-                                <td class="py-3 px-6 text-left">
-                                    <span class=" text-[16px]">SN:KUYTJ21PUZ5H32KL</span>
-                                    <br>
-                                    <span>ID：279496</span>
-                                </td>
-                                <td class="py-3 px-6 text-center flex items-center justify-center gap-2">
-                                    <a href="{{ route('device.show', ['id' => 123]) }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200">Detail</a>
-                                    <a href="{{ route('device.edit', ['id' => 123]) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Edit</a>
-                                    <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200">Delete</button>
-                                </td>
-                            </tr>
+                            </tr>                                
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

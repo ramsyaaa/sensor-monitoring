@@ -32,14 +32,14 @@ class LoginController extends Controller
         ];
 
         // Kirim permintaan ke API
-        $response = Http::timeout(20)->withoutVerifying()->post('https://sensor-monitoring.apicollection.my.id/api/v1/authenticate', $credentials);
+        $response = Http::timeout(20)->withoutVerifying()
+            ->post(env('URL_API') . '/api/v1/authenticate', $credentials);
 
         // Cek apakah respons sukses
-        if ($response->ok()) {
-            // Ambil data dari respons
+        if ($response->ok() && isset($response->json()['data'])) {
             $data = $response->json()['data'];
 
-            // Simpan token dan data pengguna di session
+            // Simpan token dan data pengguna di session dengan timestamp
             session([
                 'access_token' => $data['access_token'],
                 'clientId' => $data['clientId'],
@@ -48,12 +48,11 @@ class LoginController extends Controller
                 'refresh_token' => $data['refresh_token'],
                 'scope' => $data['scope'],
                 'userId' => $data['userId'],
+                'login_time' => now(), // Menyimpan waktu login
             ]);
 
-            // Redirect ke halaman dashboard dengan pesan sukses
             return redirect(route('home'))->with('success', 'Login berhasil!');
         } else {
-            // Jika gagal login, redirect kembali ke form login dengan pesan error
             return back()->withErrors([
                 'username' => 'Username atau password salah',
             ])->withInput($request->only('username'));
@@ -61,10 +60,26 @@ class LoginController extends Controller
     }
 
 
+
     // Method untuk logout
     public function logout()
     {
-        Auth::logout();
-        return redirect(route('auth.login.form'))->with('success', 'Anda telah logout.');
+        // Hapus semua data session yang terkait dengan autentikasi
+        session()->forget([
+            'access_token',
+            'clientId',
+            'clientSecret',
+            'expires_in',
+            'refresh_token',
+            'scope',
+            'userId',
+            'login_time'
+        ]);
+
+        // Hapus seluruh session atau bisa gunakan session()->flush() jika ingin membersihkan semua
+        session()->flush();
+
+        // Arahkan ke halaman login
+        return redirect()->route('auth.login.form')->with('success', 'Anda telah berhasil logout.');
     }
 }
