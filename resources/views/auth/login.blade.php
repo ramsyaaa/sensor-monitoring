@@ -13,11 +13,11 @@
                     <h1 class="font-bold text-[30px]">Monitoring System</h1>
                 </div>
                 @include('components.input', [
-                    'id' => 'email',
-                    'label' => 'Email',
-                    'type' => 'email',
-                    'name' => 'email',
-                    'placeholder' => 'Email Address',
+                    'id' => 'username',
+                    'label' => 'Username',
+                    'type' => 'text',
+                    'name' => 'username',
+                    'placeholder' => 'Ussername',
                 ])
                 @include('components.input', [
                     'id' => 'password',
