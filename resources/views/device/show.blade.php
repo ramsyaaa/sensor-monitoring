@@ -29,7 +29,7 @@
 
                 <div class="overflow-x-auto bg-white px-6 pb-10 rounded-lg shadow-lg">
                     <div class="py-5 font-bold text-[20px]">
-                        Device ID:12341234
+                        Device ID:{{ $data['device']['id'] }}
                     </div>
                     <table class="min-w-full border border-gray-300 rounded-lg shadow-md">
                         <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -41,22 +41,23 @@
                             </tr>
                         </thead>
                         <tbody class="text-gray-700 text-sm font-light">
+                            @foreach ($sensors as $index => $sensor)
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
-                                <td class="py-3 px-6 text-left">1</td>
+                                <td class="py-3 px-6 text-left">{{ $loop->iteration }}</td>
                                 <td class="py-3 px-6 text-left flex gap-4 items-start">
                                     <div>
-                                        <i class="fas fa-network-wired"></i>
+                                        <img class="max-w-[50px]" src="{{ $sensor['iocUrl'] }}" alt="">
                                     </div>
                                     <div>
-                                        <span class="font-bold text-[16px]">Flow Velocity</span>
+                                        <span class="font-bold text-[16px]">{{ $sensor['sensorName'] }}</span>
                                         <br>
-                                        <span class="text-[12px]">ID:12341234</span>
+                                        <span class="text-[12px]">ID:{{ $sensor['id'] }}</span>
                                     </div>
                                 </td>
                                 <td class="py-3 px-6 text-left">
-                                    <span class=" text-[20px]">1.33 m</span>
+                                    <span class=" text-[20px]">{{ $sensor['value'] }} {{ $sensor['unit'] }}</span>
                                     <br>
-                                    <span>Updated 12-12-2000 23:59:59</span>
+                                    <span>Updated {{ $sensor['updateDate'] }}</span>
                                 </td>
                                 <td class="py-3 px-6 text-center flex items-center justify-center gap-2">
                                     {{-- <a href="{{ route('menu.show', ['id' => 1]) }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200">Detail</a>
@@ -64,29 +65,7 @@
                                     {{-- <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200">Delete</button> --}}
                                 </td>
                             </tr>
-                            <tr class="border-b border-gray-200 hover:bg-gray-100">
-                                <td class="py-3 px-6 text-left">1</td>
-                                <td class="py-3 px-6 text-left flex gap-4 items-start">
-                                    <div>
-                                        <i class="fas fa-network-wired"></i>
-                                    </div>
-                                    <div>
-                                        <span class="font-bold text-[16px]">Flow Velocity</span>
-                                        <br>
-                                        <span class="text-[12px]">ID:12341234</span>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-6 text-left">
-                                    <span class=" text-[20px]">1.33 m</span>
-                                    <br>
-                                    <span>Updated 12-12-2000 23:59:59</span>
-                                </td>
-                                <td class="py-3 px-6 text-center flex items-center justify-center gap-2">
-                                    {{-- <a href="{{ route('menu.show', ['id' => 1]) }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200">Detail</a>
-                                    <a href="{{ route('menu.edit', ['id' => 1]) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Edit</a> --}}
-                                    {{-- <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200">Delete</button> --}}
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
