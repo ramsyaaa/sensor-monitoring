@@ -5,8 +5,9 @@ on:
     branches:
       - main # Trigger on push to the main branch
   pull_request:
+    types: [closed]
     branches:
-      - main # Trigger on pull request merged to the main branch
+      - main # Trigger on pull request accepted to the main branch
 
 jobs:
   deploy:
