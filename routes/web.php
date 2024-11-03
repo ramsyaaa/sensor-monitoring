@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Device\DeviceController;
+use App\Http\Controllers\Sensor\SensorController;
 use App\Http\Middleware\CheckSession;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
@@ -22,4 +23,5 @@ Route::middleware([CheckSession::class])->group(function () {
     Route::get('devices/create', [DeviceController::class, 'create'])->name('device.create');
     Route::get('devices/{id}/edit', [DeviceController::class, 'edit'])->name('device.edit');
     Route::get('devices/{id}', [DeviceController::class, 'show'])->name('device.show');
+    Route::get('sensors/{id}/realtime', [SensorController::class, 'realtime'])->name('sensor.realtime');
 });

@@ -1,5 +1,4 @@
 <div
-    x-cloak
     x-show="sidebar"
     x-transition:enter="transition-transform transition-opacity ease-out duration-300"
     x-transition:enter-start="transform -translate-x-full opacity-0"
@@ -26,7 +25,7 @@
                     Monitoring
                 </div>
                 @include('components.list-sidebar', [
-                    'route' => route('device.index', ['id' => 12]),
+                    'route' => route('device.index'),
                     'title' => 'Daftar Device',
                     'activePattern' => 'device*',
                     'icon' => 'fas fa-chart-line',

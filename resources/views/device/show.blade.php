@@ -59,10 +59,10 @@
                                     <br>
                                     <span>Updated {{ $sensor['updateDate'] }}</span>
                                 </td>
-                                <td class="py-3 px-6 text-center flex items-center justify-center gap-2">
-                                    {{-- <a href="{{ route('menu.show', ['id' => 1]) }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200">Detail</a>
-                                    <a href="{{ route('menu.edit', ['id' => 1]) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Edit</a> --}}
-                                    {{-- <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200">Delete</button> --}}
+                                <td class="py-3 px-6">
+                                    <div class="flex gap-2 justify-center">
+                                        <a href="javascript:void(0)" onclick="getRealtime({{ $sensor['id'] }})" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200">RT Curv</a>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
@@ -70,7 +70,7 @@
                     </table>
                 </div>
             </div>
-
         </div>
+        @include('components.chart')
     </div>
 @endsection
