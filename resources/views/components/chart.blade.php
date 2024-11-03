@@ -1,14 +1,43 @@
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script> <!-- Sertakan CanvasJS di sini -->
 <style>
-    .pagination { display: flex; justify-content: center; margin-top: 10px; }
-    .pagination button { margin: 0 5px; padding: 5px 10px; border: 1px solid #ccc; border-radius: 5px; background: #f0f0f0; cursor: pointer; }
-    .pagination button.active { background: #007BFF; color: white; }
+    .pagination { 
+        display: flex; 
+        justify-content: center; 
+        margin-top: 10px; 
+    }
+    .pagination button { 
+        margin: 0 5px; 
+        padding: 5px 10px; 
+        border: 1px solid #ccc; 
+        border-radius: 5px; 
+        background: #f0f0f0; 
+        cursor: pointer; 
+    }
+    .pagination button.active { 
+        background: #14176c; 
+        color: white; 
+    }
+    .summary-container {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: #f9f9f9;
+    }
+    .summary-container h3 {
+        margin: 0;
+        padding: 5px 0;
+    }
+    .summary-container div {
+        margin: 5px 0;
+    }
 </style>
 
 <div>
     <!-- Chart Popup -->
     <div id="chartPopup" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
-        <div class="bg-white p-10 rounded shadow-lg relative w-1/2 flex flex-col max-h-[80vh] overflow-hidden">
+        <div class="bg-white p-10 rounded shadow-lg relative w-full lg:w-3/4 flex flex-col h-screen overflow-hidden">
             <button onclick="closeChartPopup()" class="absolute top-2 right-2 text-gray-700">✕</button>
             
             <div class="flex items-end mb-4">
@@ -21,20 +50,59 @@
                     <label for="endDate">End Date:</label>
                     <input type="datetime-local" id="endDate" class="border border-gray-300 rounded p-2">
                 </div>
-                <button onclick="filterData()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Apply Filter</button>
+                <button onclick="filterData()" class="bg-[#14176c] text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Apply Filter</button>
             </div>
             
-            <!-- Data Table with Pagination -->
-            <div class="overflow-auto max-h-60 mb-4">
-                <table class="min-w-full border-collapse border border-gray-300 mt-4">
-                    <thead>
-                        <tr>
-                            <th class="border border-gray-300 px-4 py-2">Date</th>
-                            <th class="border border-gray-300 px-4 py-2">Value</th>
-                        </tr>
-                    </thead>
-                    <tbody id="dataTableBody"></tbody>
-                </table>
+            <div class="flex">
+                <div class="w-2/3">
+                    <div class="overflow-auto max-h-60 mb-4">
+                        <table class="min-w-full border-collapse border border-gray-300 mt-4">
+                            <thead>
+                                <tr>
+                                    <th class="border border-gray-300 px-4 py-2">Date</th>
+                                    <th class="border border-gray-300 px-4 py-2">Value</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="pagination mb-4" id="pagination"></div>
+                </div>
+
+                <!-- Summary Section -->
+                <div class="summary-container w-1/3 ml-4">
+                    <h3 class="text-lg font-semibold mb-2">Summary</h3>
+                    <table class="min-w-full border-collapse border border-gray-300">
+                        <thead>
+                            <tr>
+                                <th class="border border-gray-300 px-4 py-2">Metric</th>
+                                <th class="border border-gray-300 px-4 py-2">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-gray-300 px-4 py-2">Maximum</td>
+                                <td class="border border-gray-300 px-4 py-2" id="maxValue">-</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 px-4 py-2">Minimum</td>
+                                <td class="border border-gray-300 px-4 py-2" id="minValue">-</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 px-4 py-2">Average</td>
+                                <td class="border border-gray-300 px-4 py-2" id="avgValue">-</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 px-4 py-2">Cumulative</td>
+                                <td class="border border-gray-300 px-4 py-2" id="cumValue">-</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 px-4 py-2">Difference (Max - Min)</td>
+                                <td class="border border-gray-300 px-4 py-2" id="diffValue">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="pagination mb-4" id="pagination"></div> <!-- Pagination Container -->
@@ -44,6 +112,8 @@
         </div>
     </div>
 </div>
+
+@include('components.loading')
 
 <script>
     let currentSensorId = 1; // Default sensor ID
@@ -77,7 +147,7 @@
                 text: sensorName // Judul diambil dari sensorName
             },
             axisX: {
-                title: "", // Kosongkan judul untuk menghilangkan teks "Timestamp"
+                title: "", // Kosongkan judul
                 valueFormatString: "YYYY-MM-DD HH:mm:ss", // Format label sumbu X
                 labelAngle: -45 // Mengatur sudut label
             },
@@ -113,13 +183,15 @@
 
         // Populate the table and pagination
         populateTable(event.detail.dataList);
+        hideLoading();
     });
 
     function getRealtime(id) {
+        showLoading();
         currentSensorId = id; // Simpan ID sensor yang dikirim
         document.getElementById("startDate").value = ""; // Reset start date input
         document.getElementById("endDate").value = "";   // Reset end date input
-        const url = `{{ url('sensors') }}/${id}/realtime`;
+        const url = `{{ secure_url('sensors') }}/${id}/realtime`;
 
         console.log("Fetching data from:", url); // Log URL untuk memeriksa
         fetch(url, {
@@ -135,7 +207,6 @@
             return response.json();
         })
         .then(data => {
-            console.log("Data received:", data); // Log data yang diterima
             const sensorData = {
                 dataList: data.data.dataList,
                 sensorName: data.data.sensorName // Ambil nama sensor dari respons
@@ -144,27 +215,23 @@
             document.dispatchEvent(new CustomEvent('chart-data-loaded', { detail: sensorData }));
         })
         .catch(error => {
-            console.error("Error fetching data:", error); // Log error jika terjadi kesalahan
+            console.error("Error fetching data:", error);
         });
     }
 
     function filterData() {
+        showLoading();
         const startDate = document.getElementById("startDate").value;
         const endDate = document.getElementById("endDate").value;
         
         // Periksa apakah ada filter yang diberikan
         if (!startDate && !endDate) {
-            console.log("No filters applied, fetching latest data.");
             getRealtime(currentSensorId); // Jika tidak ada filter, ambil data terbaru
             return;
         }
-
-        // Jika filter ada, bisa menggunakan logika lain di sini
-        // (misalnya menggunakan fetch dengan parameter untuk startDate dan endDate)
-        console.log("Applying filter with startDate:", startDate, "endDate:", endDate);
         
         // Jika ingin mengirim data filter, Anda bisa melakukannya dengan fetch
-        const filterUrl = `{{ url('sensors') }}/${currentSensorId}/realtime?startDate=${startDate}&endDate=${endDate}`;
+        const filterUrl = `{{ secure_url('sensors') }}/${currentSensorId}/realtime?startDate=${startDate}&endDate=${endDate}`;
         fetch(filterUrl, {
             method: "GET",
             headers: {
@@ -186,13 +253,12 @@
     }
 
     function populateTable(dataList) {
-        // Sort the data by addTime in ascending order
         const sortedData = dataList.sort((a, b) => new Date(a.addTime) - new Date(b.addTime));
 
         const tableBody = document.getElementById("dataTableBody");
         tableBody.innerHTML = ""; // Clear previous data
 
-        const totalRows = sortedData.length; // Update totalRows to the length of sorted data
+        const totalRows = sortedData.length;
         const totalPages = Math.ceil(totalRows / rowsPerPage);
         
         // Paginate data
@@ -207,8 +273,35 @@
             tableBody.appendChild(row);
         }
 
+        // Update summary data
+        updateSummary(sortedData);
+
         // Render pagination
         renderPagination(totalPages);
+    }
+
+    function updateSummary(dataList) {
+        if (dataList.length === 0) {
+            document.getElementById("maxValue").innerText = '-';
+            document.getElementById("minValue").innerText = '-';
+            document.getElementById("avgValue").innerText = '-';
+            document.getElementById("cumValue").innerText = '-';
+            document.getElementById("diffValue").innerText = '-';
+            return;
+        }
+
+        const values = dataList.map(item => parseFloat(item.val));
+        const maxValue = Math.max(...values);
+        const minValue = Math.min(...values);
+        const avgValue = values.reduce((a, b) => a + b, 0) / values.length;
+        const cumValue = values.reduce((a, b) => a + b, 0);
+        const diffValue = maxValue - minValue;
+
+        document.getElementById("maxValue").innerText = maxValue.toFixed(2);
+        document.getElementById("minValue").innerText = minValue.toFixed(2);
+        document.getElementById("avgValue").innerText = avgValue.toFixed(2);
+        document.getElementById("cumValue").innerText = cumValue.toFixed(2);
+        document.getElementById("diffValue").innerText = diffValue.toFixed(2);
     }
 
     function renderPagination(totalPages) {

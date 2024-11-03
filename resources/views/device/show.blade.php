@@ -46,7 +46,7 @@
                                 <td class="py-3 px-6 text-left">{{ $loop->iteration }}</td>
                                 <td class="py-3 px-6 text-left flex gap-4 items-start">
                                     <div>
-                                        <img class="max-w-[50px]" src="{{ $sensor['iocUrl'] }}" alt="">
+                                        <img class="max-w-[40px]" src="{{ checkUrlIcon($sensor['sensorName']) }}" alt="">
                                     </div>
                                     <div>
                                         <span class="font-bold text-[16px]">{{ $sensor['sensorName'] }}</span>
@@ -61,7 +61,7 @@
                                 </td>
                                 <td class="py-3 px-6">
                                     <div class="flex gap-2 justify-center">
-                                        <a href="javascript:void(0)" onclick="getRealtime({{ $sensor['id'] }})" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200">RT Curv</a>
+                                        <a href="javascript:void(0)" onclick="getRealtime({{ $sensor['id'] }})" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200">RT / History Curv</a>
                                     </div>
                                 </td>
                             </tr>
