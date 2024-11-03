@@ -23,11 +23,6 @@
                 </div>
 
                 <div class="overflow-x-auto bg-white px-6 py-10 rounded-lg shadow-lg">
-                    <div class="w-full flex justify-end mb-4">
-                        <a href="{{ route('device.create') }}" class="text-white px-4 py-2 rounded-lg shadow-lg hover:scale-110 bg-blue-400">
-                            Add New
-                        </a>
-                    </div>
                     <table class="min-w-full border border-gray-300 rounded-lg shadow-md">
                         <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                             <tr class="text-[12px]">
@@ -51,8 +46,6 @@
                                 </td>
                                 <td class="py-3 px-6 text-center flex items-center justify-center gap-2">
                                     <a href="{{ route('device.show', ['id' => $item['id'] ?? '']) }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200">Detail</a>
-                                    <a href="{{ route('device.edit', ['id' => $item['id'] ?? '']) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Edit</a>
-                                    <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200">Delete</button>
                                 </td>
                             </tr>                                
                             @endforeach
