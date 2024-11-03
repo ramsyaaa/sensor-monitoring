@@ -1,8 +1,24 @@
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script> <!-- Sertakan CanvasJS di sini -->
 <style>
-    .pagination { display: flex; justify-content: center; margin-top: 10px; }
-    .pagination button { margin: 0 5px; padding: 5px 10px; border: 1px solid #ccc; border-radius: 5px; background: #f0f0f0; cursor: pointer; }
-    .pagination button.active { background: #007BFF; color: white; }
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .pagination button {
+        margin: 0 5px;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: #f0f0f0;
+        cursor: pointer;
+    }
+
+    .pagination button.active {
+        background: #007BFF;
+        color: white;
+    }
 </style>
 
 <div>
@@ -10,7 +26,7 @@
     <div id="chartPopup" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
         <div class="bg-white p-10 rounded shadow-lg relative w-1/2 flex flex-col max-h-[80vh] overflow-hidden">
             <button onclick="closeChartPopup()" class="absolute top-2 right-2 text-gray-700">✕</button>
-            
+
             <div class="flex items-end mb-4">
                 <!-- Filter Section -->
                 <div class="mr-4 flex flex-col gap-2">
@@ -21,9 +37,11 @@
                     <label for="endDate">End Date:</label>
                     <input type="datetime-local" id="endDate" class="border border-gray-300 rounded p-2">
                 </div>
-                <button onclick="filterData()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Apply Filter</button>
+                <button onclick="filterData()"
+                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Apply
+                    Filter</button>
             </div>
-            
+
             <!-- Data Table with Pagination -->
             <div class="overflow-auto max-h-60 mb-4">
                 <table class="min-w-full border-collapse border border-gray-300 mt-4">
@@ -68,7 +86,7 @@
             console.error("Chart Container with id 'chartContainer' was not found");
             return;
         }
-        
+
         const chart = new CanvasJS.Chart(chartContainer, {
             theme: "light2",
             animationEnabled: true,
@@ -100,7 +118,7 @@
         }
         return apiResponse.map(item => ({
             x: new Date(item.addTime), // Convert addTime to a Date object
-            y: parseFloat(item.val)    // Convert val to a numeric value
+            y: parseFloat(item.val) // Convert val to a numeric value
         }));
     }
 
@@ -118,40 +136,42 @@
     function getRealtime(id) {
         currentSensorId = id; // Simpan ID sensor yang dikirim
         document.getElementById("startDate").value = ""; // Reset start date input
-        document.getElementById("endDate").value = "";   // Reset end date input
-        const url = `{{ url('sensors') }}/${id}/realtime`;
+        document.getElementById("endDate").value = ""; // Reset end date input
+        const url = `{{ secure_url('sensors') }}/${id}/realtime`;
 
         console.log("Fetching data from:", url); // Log URL untuk memeriksa
         fetch(url, {
-            method: "GET",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok " + response.statusText);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log("Data received:", data); // Log data yang diterima
-            const sensorData = {
-                dataList: data.data.dataList,
-                sensorName: data.data.sensorName // Ambil nama sensor dari respons
-            };
-            currentData = sensorData.dataList; // Simpan data untuk tabel
-            document.dispatchEvent(new CustomEvent('chart-data-loaded', { detail: sensorData }));
-        })
-        .catch(error => {
-            console.error("Error fetching data:", error); // Log error jika terjadi kesalahan
-        });
+                method: "GET",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok " + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Data received:", data); // Log data yang diterima
+                const sensorData = {
+                    dataList: data.data.dataList,
+                    sensorName: data.data.sensorName // Ambil nama sensor dari respons
+                };
+                currentData = sensorData.dataList; // Simpan data untuk tabel
+                document.dispatchEvent(new CustomEvent('chart-data-loaded', {
+                    detail: sensorData
+                }));
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error); // Log error jika terjadi kesalahan
+            });
     }
 
     function filterData() {
         const startDate = document.getElementById("startDate").value;
         const endDate = document.getElementById("endDate").value;
-        
+
         // Periksa apakah ada filter yang diberikan
         if (!startDate && !endDate) {
             console.log("No filters applied, fetching latest data.");
@@ -162,27 +182,29 @@
         // Jika filter ada, bisa menggunakan logika lain di sini
         // (misalnya menggunakan fetch dengan parameter untuk startDate dan endDate)
         console.log("Applying filter with startDate:", startDate, "endDate:", endDate);
-        
+
         // Jika ingin mengirim data filter, Anda bisa melakukannya dengan fetch
         const filterUrl = `{{ url('sensors') }}/${currentSensorId}/realtime?startDate=${startDate}&endDate=${endDate}`;
         fetch(filterUrl, {
-            method: "GET",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            const sensorData = {
-                dataList: data.data.dataList,
-                sensorName: data.data.sensorName // Ambil nama sensor dari respons
-            };
-            currentData = sensorData.dataList; // Simpan data untuk tabel
-            document.dispatchEvent(new CustomEvent('chart-data-loaded', { detail: sensorData }));
-        })
-        .catch(error => {
-            console.error("Error fetching filtered data:", error);
-        });
+                method: "GET",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const sensorData = {
+                    dataList: data.data.dataList,
+                    sensorName: data.data.sensorName // Ambil nama sensor dari respons
+                };
+                currentData = sensorData.dataList; // Simpan data untuk tabel
+                document.dispatchEvent(new CustomEvent('chart-data-loaded', {
+                    detail: sensorData
+                }));
+            })
+            .catch(error => {
+                console.error("Error fetching filtered data:", error);
+            });
     }
 
     function populateTable(dataList) {
@@ -194,7 +216,7 @@
 
         const totalRows = sortedData.length; // Update totalRows to the length of sorted data
         const totalPages = Math.ceil(totalRows / rowsPerPage);
-        
+
         // Paginate data
         const startRow = (currentPage - 1) * rowsPerPage;
         const endRow = Math.min(startRow + rowsPerPage, totalRows);
@@ -231,7 +253,7 @@
             const button = document.createElement("button");
             button.innerText = page;
             button.className = page === currentPage ? "active" : "";
-            button.onclick = function () {
+            button.onclick = function() {
                 currentPage = page; // Update current page
                 populateTable(currentData); // Populate table with current data
             };
@@ -242,7 +264,7 @@
         if (currentPage > 1) {
             const prevButton = document.createElement("button");
             prevButton.innerText = "Previous";
-            prevButton.onclick = function () {
+            prevButton.onclick = function() {
                 if (currentPage > 1) {
                     currentPage--;
                     populateTable(currentData);
@@ -254,7 +276,7 @@
         if (currentPage < totalPages) {
             const nextButton = document.createElement("button");
             nextButton.innerText = "Next";
-            nextButton.onclick = function () {
+            nextButton.onclick = function() {
                 if (currentPage < totalPages) {
                     currentPage++;
                     populateTable(currentData);
