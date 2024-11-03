@@ -184,7 +184,8 @@
         console.log("Applying filter with startDate:", startDate, "endDate:", endDate);
 
         // Jika ingin mengirim data filter, Anda bisa melakukannya dengan fetch
-        const filterUrl = `{{ url('sensors') }}/${currentSensorId}/realtime?startDate=${startDate}&endDate=${endDate}`;
+        const filterUrl =
+            `{{ secure_url('sensors') }}/${currentSensorId}/realtime?startDate=${startDate}&endDate=${endDate}`;
         fetch(filterUrl, {
                 method: "GET",
                 headers: {
