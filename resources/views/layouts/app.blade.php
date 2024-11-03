@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
-    <link rel="stylesheet" href="{{ asset('asset/css/input.css') }}">
+    <link rel="stylesheet" href="{{ asset('asset/css/style.css') }}">
     <title>Sensor Monitoring - {{ $title ?? '' }}</title>
 
     <style>
