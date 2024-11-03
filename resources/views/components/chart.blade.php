@@ -39,7 +39,7 @@
     <div id="chartPopup" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
         <div class="bg-white p-10 rounded shadow-lg relative w-full lg:w-3/4 flex flex-col h-screen overflow-hidden">
             <button onclick="closeChartPopup()" class="absolute top-2 right-2 text-gray-700">✕</button>
-            
+
             <div class="flex items-end mb-4">
                 <!-- Filter Section -->
                 <div class="mr-4 flex flex-col gap-2">
@@ -138,7 +138,7 @@
             console.error("Chart Container with id 'chartContainer' was not found");
             return;
         }
-        
+
         const chart = new CanvasJS.Chart(chartContainer, {
             theme: "light2",
             animationEnabled: true,
@@ -170,7 +170,7 @@
         }
         return apiResponse.map(item => ({
             x: new Date(item.addTime), // Convert addTime to a Date object
-            y: parseFloat(item.val)    // Convert val to a numeric value
+            y: parseFloat(item.val) // Convert val to a numeric value
         }));
     }
 
@@ -223,7 +223,7 @@
         showLoading();
         const startDate = document.getElementById("startDate").value;
         const endDate = document.getElementById("endDate").value;
-        
+
         // Periksa apakah ada filter yang diberikan
         if (!startDate && !endDate) {
             getRealtime(currentSensorId); // Jika tidak ada filter, ambil data terbaru
@@ -232,24 +232,27 @@
         
         // Jika ingin mengirim data filter, Anda bisa melakukannya dengan fetch
         const filterUrl = `{{ secure_url('sensors') }}/${currentSensorId}/realtime?startDate=${startDate}&endDate=${endDate}`;
+
         fetch(filterUrl, {
-            method: "GET",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            const sensorData = {
-                dataList: data.data.dataList,
-                sensorName: data.data.sensorName // Ambil nama sensor dari respons
-            };
-            currentData = sensorData.dataList; // Simpan data untuk tabel
-            document.dispatchEvent(new CustomEvent('chart-data-loaded', { detail: sensorData }));
-        })
-        .catch(error => {
-            console.error("Error fetching filtered data:", error);
-        });
+                method: "GET",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const sensorData = {
+                    dataList: data.data.dataList,
+                    sensorName: data.data.sensorName // Ambil nama sensor dari respons
+                };
+                currentData = sensorData.dataList; // Simpan data untuk tabel
+                document.dispatchEvent(new CustomEvent('chart-data-loaded', {
+                    detail: sensorData
+                }));
+            })
+            .catch(error => {
+                console.error("Error fetching filtered data:", error);
+            });
     }
 
     function populateTable(dataList) {
@@ -260,7 +263,7 @@
 
         const totalRows = sortedData.length;
         const totalPages = Math.ceil(totalRows / rowsPerPage);
-        
+
         // Paginate data
         const startRow = (currentPage - 1) * rowsPerPage;
         const endRow = Math.min(startRow + rowsPerPage, totalRows);
@@ -324,7 +327,7 @@
             const button = document.createElement("button");
             button.innerText = page;
             button.className = page === currentPage ? "active" : "";
-            button.onclick = function () {
+            button.onclick = function() {
                 currentPage = page; // Update current page
                 populateTable(currentData); // Populate table with current data
             };
@@ -335,7 +338,7 @@
         if (currentPage > 1) {
             const prevButton = document.createElement("button");
             prevButton.innerText = "Previous";
-            prevButton.onclick = function () {
+            prevButton.onclick = function() {
                 if (currentPage > 1) {
                     currentPage--;
                     populateTable(currentData);
@@ -347,7 +350,7 @@
         if (currentPage < totalPages) {
             const nextButton = document.createElement("button");
             nextButton.innerText = "Next";
-            nextButton.onclick = function () {
+            nextButton.onclick = function() {
                 if (currentPage < totalPages) {
                     currentPage++;
                     populateTable(currentData);
