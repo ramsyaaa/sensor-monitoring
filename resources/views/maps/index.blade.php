@@ -34,7 +34,7 @@
                     <div id="map" style="width: 100%; height: 500px;"></div>
                 </div>
                 <div id="detail-panel" style="z-index: 1000" class="fixed top-0 right-0 w-full md:w-2/3 h-screen bg-white shadow-lg p-4 invisible-panel overflow-y-auto">
-                    <button onclick="closePanel()" class="absolute top-2 right-4 text-gray-600">&times;</button>
+                    <button onclick="closePanel()" class="absolute top-2 right-4 text-gray-600 text-[24px]">&times;</button>
                     <div id="detail-content"></div>
                 </div>
             </div>
