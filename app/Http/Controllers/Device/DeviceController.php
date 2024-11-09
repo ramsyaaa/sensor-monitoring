@@ -43,11 +43,6 @@ class DeviceController extends Controller
         }
     }
 
-
-
-
-
-
     public function show($id){
         $token = session('access_token'); // Ambil token dari session
 
@@ -77,10 +72,11 @@ class DeviceController extends Controller
             $data = $response->json(); // Mengambil data dari response
             $data = $data['data'];
             $sensors = $data['device']['sensorsList'];
-            // dd($sensors);
+            if(isset($_GET['from_map'])){
+                return view('maps.show', compact('data', 'sensors'));
+            }
             return view('device.show', compact('data', 'sensors'));
         } else {
-            dd($response);
             return back()->withErrors('Gagal mengambil data dari API: ' . $response->body());
         }
         return view('device.show');
