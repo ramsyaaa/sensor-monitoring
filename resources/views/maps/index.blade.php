@@ -75,8 +75,8 @@
         var initialLat = devices.length > 0 ? devices[0].lat : defaultLat;
         var initialLng = devices.length > 0 ? devices[0].lng : defaultLng;
 
-        // Inisialisasi peta dan atur tampilan awal pada posisi perangkat pertama atau default
-        var map = L.map('map').setView([initialLat, initialLng], 13);
+        // Inisialisasi peta dan atur tampilan awal pada posisi perangkat pertama atau default dengan zoom lebih dekat
+        var map = L.map('map').setView([initialLat, initialLng], 18); // Zoom lebih dekat pada 15
 
         // Tambahkan layer tile dari OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -96,9 +96,9 @@
         // Setel ulang tampilan peta setelah semua marker ditambahkan, 
         // gunakan posisi perangkat pertama atau tetap di posisi default jika tidak ada perangkat
         if (devices.length > 0) {
-            map.setView([devices[0].lat, devices[0].lng], 13);
+            map.setView([devices[0].lat, devices[0].lng], 15); // Zoom lebih dekat pada 15
         } else {
-            map.setView([defaultLat, defaultLng], 13);
+            map.setView([defaultLat, defaultLng], 15); // Zoom lebih dekat pada 15
         }
 
     </script>
