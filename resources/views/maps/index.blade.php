@@ -67,7 +67,7 @@
             document.getElementById('detail-content').innerHTML = ''; // Kosongkan konten
         }
 
-        var devices = {!! json_encode($data) !!};
+        var devices = {!! json_encode($allDevices) !!};
 
         // Tentukan lokasi default (Bandung) jika array devices kosong
         var defaultLat = -6.9175;
@@ -76,7 +76,7 @@
         var initialLng = devices.length > 0 ? devices[0].lng : defaultLng;
 
         // Inisialisasi peta dan atur tampilan awal pada posisi perangkat pertama atau default dengan zoom lebih dekat
-        var map = L.map('map').setView([initialLat, initialLng], 18); // Zoom lebih dekat pada 15
+        var map = L.map('map').setView([initialLat, initialLng], 15); // Zoom pada 15
 
         // Tambahkan layer tile dari OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -84,21 +84,41 @@
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
+        // Variabel untuk menyimpan semua posisi marker
+        var bounds = [];
+
         // Menambahkan marker untuk setiap perangkat
         devices.forEach(function(device) {
-            L.marker([device.lat, device.lng]).addTo(map)
-                .bindPopup(device.device_name)
-                .on('click', function() {
-                    showDetail(device.id);
-                });
+            if (device.lat && device.lng) {  // Pastikan lat dan lng ada
+                var position = [parseFloat(device.lat), parseFloat(device.lng)];
+                
+                // Jika sumbernya dari data_list, tambahkan offset agar tidak menumpuk
+                if (device.source === 'data_list') {
+                    position[0] += 0.00005; // offset latitude
+                    position[1] += 0.00005; // offset longitude
+                }
+                
+                // Tambahkan posisi ke bounds
+                bounds.push(position);
+                
+                // Tambahkan marker ke peta
+                L.marker(position).addTo(map)
+                    .bindPopup(device.source === 'data_list' ? device.sensor_name : device.device_name)
+                    .on('click', function() {
+                        if (device.source === 'data') {
+                            showDetail(device.id);
+                        } else if (device.source === 'data_list') {
+                            getRealtime(device.id);
+                        }
+                    });
+            } 
         });
 
-        // Setel ulang tampilan peta setelah semua marker ditambahkan, 
-        // gunakan posisi perangkat pertama atau tetap di posisi default jika tidak ada perangkat
-        if (devices.length > 0) {
-            map.setView([devices[0].lat, devices[0].lng], 15); // Zoom lebih dekat pada 15
+        // Sesuaikan peta agar semua marker terlihat
+        if (bounds.length > 0) {
+            map.fitBounds(bounds);
         } else {
-            map.setView([defaultLat, defaultLng], 15); // Zoom lebih dekat pada 15
+            map.setView([defaultLat, defaultLng], 15); // Zoom pada 15 jika tidak ada marker
         }
 
     </script>
