@@ -82,8 +82,7 @@ class SensorController extends Controller
                 'Content-Type' => 'application/json',
             ])
             ->post(env('URL_API') . '/api/v1/geomapping/sensor-list', $jsonData);
-            dd($response);
-
+            
         if ($response->successful()) {
             $sensors = $response->json();
             $sensors = $sensors['data'];
