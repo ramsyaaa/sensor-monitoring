@@ -129,6 +129,7 @@ class SensorController extends Controller
             if ($response->successful()) {
                 return redirect()->back()->with('success', 'Sensor updated successfully!');
             } else {
+                dd($response);
                 return redirect()->back()->with('error', 'Failed to update sensor.');
             }
     }
