@@ -93,6 +93,8 @@ class SensorController extends Controller
         
             // Mengambil elemen pertama dari hasil filter, atau null jika tidak ditemukan
             $data['sensor'] = !empty($sensor) ? array_values($sensor)[0] : null;
+        }else{
+            return back()->withErrors('Gagal mengambil data dari API: ' . $response->body());
         }
         return view('sensor.edit', $data);
     }
