@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Device\DeviceController;
+use App\Http\Controllers\Map\MapController;
 use App\Http\Controllers\Sensor\SensorController;
 use App\Http\Middleware\CheckSession;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -24,4 +25,8 @@ Route::middleware([CheckSession::class])->group(function () {
     Route::get('devices/{id}/edit', [DeviceController::class, 'edit'])->name('device.edit');
     Route::get('devices/{id}', [DeviceController::class, 'show'])->name('device.show');
     Route::get('sensors/{id}/realtime', [SensorController::class, 'realtime'])->name('sensor.realtime');
+    Route::get('sensors/{id}/edit', [SensorController::class, 'edit'])->name('sensor.edit');
+    Route::put('sensors/{id}/update', [SensorController::class, 'update'])->name('sensor.update');
+
+    Route::get('maps', [MapController::class, 'index'])->name('map.index');
 });

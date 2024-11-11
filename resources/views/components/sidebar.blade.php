@@ -26,9 +26,15 @@
                 </div>
                 @include('components.list-sidebar', [
                     'route' => route('device.index'),
-                    'title' => 'Daftar Device',
+                    'title' => 'Device List',
                     'activePattern' => 'device*',
                     'icon' => 'fas fa-chart-line',
+                ])
+                @include('components.list-sidebar', [
+                    'route' => route('map.index'),
+                    'title' => 'Device Mapping',
+                    'activePattern' => 'maps*',
+                    'icon' => 'fas fa-map',
                 ])
             </div>
         </div>

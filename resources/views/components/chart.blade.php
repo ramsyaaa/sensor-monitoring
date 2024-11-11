@@ -36,11 +36,11 @@
 
 <div>
     <!-- Chart Popup -->
-    <div id="chartPopup" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
+    <div id="chartPopup" style="z-index: 1001" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
         <div class="bg-white p-10 rounded shadow-lg relative w-full lg:w-3/4 flex flex-col h-screen overflow-hidden">
             <button onclick="closeChartPopup()" class="absolute top-2 right-2 text-gray-700">✕</button>
 
-            <div class="flex items-end mb-4">
+            <div class="md:flex items-end mb-4">
                 <!-- Filter Section -->
                 <div class="mr-4 flex flex-col gap-2">
                     <label for="startDate">Start Date:</label>
@@ -50,11 +50,11 @@
                     <label for="endDate">End Date:</label>
                     <input type="datetime-local" id="endDate" class="border border-gray-300 rounded p-2">
                 </div>
-                <button onclick="filterData()" class="bg-[#14176c] text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Apply Filter</button>
+                <button onclick="filterData()" class="bg-[#14176c] mt-2 md:mt-0 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Apply Filter</button>
             </div>
             
-            <div class="flex">
-                <div class="w-2/3">
+            <div class="md:flex">
+                <div class="w-full md:w-2/3 max-w-full">
                     <div class="overflow-auto max-h-60 mb-4">
                         <table class="min-w-full border-collapse border border-gray-300 mt-4">
                             <thead>
@@ -70,7 +70,7 @@
                 </div>
 
                 <!-- Summary Section -->
-                <div class="summary-container w-1/3 ml-4">
+                <div class="summary-container w-full md:w-1/3 ml-4">
                     <h3 class="text-lg font-semibold mb-2">Summary</h3>
                     <table class="min-w-full border-collapse border border-gray-300">
                         <thead>
@@ -191,7 +191,7 @@
         currentSensorId = id; // Simpan ID sensor yang dikirim
         document.getElementById("startDate").value = ""; // Reset start date input
         document.getElementById("endDate").value = "";   // Reset end date input
-        const url = `{{ secure_url('sensors') }}/${id}/realtime`;
+        const url = `{{ url('sensors') }}/${id}/realtime`;
 
         console.log("Fetching data from:", url); // Log URL untuk memeriksa
         fetch(url, {
@@ -231,7 +231,7 @@
         }
         
         // Jika ingin mengirim data filter, Anda bisa melakukannya dengan fetch
-        const filterUrl = `{{ secure_url('sensors') }}/${currentSensorId}/realtime?startDate=${startDate}&endDate=${endDate}`;
+        const filterUrl = `{{ url('sensors') }}/${currentSensorId}/realtime?startDate=${startDate}&endDate=${endDate}`;
 
         fetch(filterUrl, {
                 method: "GET",
