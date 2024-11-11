@@ -40,7 +40,7 @@
                             <div class="flex flex-col gap-2 py-4">
                                 <div class="flex flex-col gap-2">
                                     <label>Sensor Name:</label>
-                                    <input type="text" value="{{ $sensor['sensor_name'] }}" disabled class="border px-4 py-2 rounded-lg"/>
+                                    <input type="text" value="{{ $sensor['sensor_name'] ?? '' }}" disabled class="border px-4 py-2 rounded-lg"/>
                                 </div>
                                 <div class="flex flex-col gap-2">
                                     <label for="latitude">Latitude:</label>
@@ -72,8 +72,8 @@
                         <script>
                             document.addEventListener("DOMContentLoaded", function () {
                                 // Mengambil data latitude dan longitude dari variabel PHP
-                                let initialLat = {{ $sensor['lat'] }}; // Ganti dengan latitude yang sesuai
-                                let initialLng = {{ $sensor['lng'] }}; // Ganti dengan longitude yang sesuai
+                                let initialLat = {{ $sensor['lat'] ?? '' }}; // Ganti dengan latitude yang sesuai
+                                let initialLng = {{ $sensor['lng'] ?? '' }}; // Ganti dengan longitude yang sesuai
                         
                                 // Inisialisasi peta menggunakan Leaflet
                                 var map = L.map('map').setView([initialLat, initialLng], 17);
