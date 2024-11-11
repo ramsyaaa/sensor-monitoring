@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 class MapController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $token = session('access_token'); // Ambil token dari session
 
         if (!$token) {
@@ -26,12 +26,15 @@ class MapController extends Controller
 
         // Cek apakah response berhasil
         if ($response->successful()) {
-            $data = $response->json(); // Mengambil data dari response
-            $data = $data['data'];
+            $data_response = $response->json(); // Mengambil data dari response
+            $device = $data_response['data'];
+            $data['device'] = $device;
             $sensorList = [];
-            foreach ($data as $index => $item) {
+            $data['allDevices'] = [];
+
+            if($request->device != null){
                 $jsonData = [
-                    "deviceID" => $item['id'],
+                    "deviceID" => intval($request->device),
                 ];
         
                 // Mengirim permintaan POST ke API dengan JSON di body
@@ -53,20 +56,25 @@ class MapController extends Controller
                         }
                     }
                 }
+                $filteredDevices = array_filter($device, function($d) use ($request) {
+                    return $d['id'] == $request->device;
+                });
+            
+                // Tambahkan kunci 'source' untuk setiap perangkat yang difilter
+                $devices = array_map(function($device) {
+                    $device['source'] = 'data';
+                    return $device;
+                }, $filteredDevices);
+                
+                $data_list_devices = array_map(function($device) {
+                    $device['source'] = 'data_list';
+                    return $device;
+                }, $sensorList);
+                
+                // Gabungkan kedua array
+                $data['allDevices'] = array_merge($devices, $data_list_devices);
             }
-            $devices = array_map(function($device) {
-                $device['source'] = 'data';
-                return $device;
-            }, $data);
             
-            $data_list_devices = array_map(function($device) {
-                $device['source'] = 'data_list';
-                return $device;
-            }, $sensorList);
-            
-            // Gabungkan kedua array
-            $data = [];
-            $data['allDevices'] = array_merge($devices, $data_list_devices);
             return view('maps.index', $data);
         } else {
             return back()->withErrors('Gagal mengambil data dari API: ' . $response->body());

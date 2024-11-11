@@ -62,6 +62,7 @@
                                 <td class="py-3 px-6">
                                     <div class="flex gap-2 justify-center">
                                         <a href="javascript:void(0)" onclick="getRealtime({{ $sensor['id'] }})" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200">RT / History Curv</a>
+                                        <a href="{{ route('sensor.edit', ['id' => $sensor['id'], 'device' => $data['device']['id'] ]) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Update</a>
                                     </div>
                                 </td>
                             </tr>
