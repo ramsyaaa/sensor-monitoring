@@ -76,7 +76,7 @@
                                 let initialLng = {{ $sensor['lng'] }}; // Ganti dengan longitude yang sesuai
                         
                                 // Inisialisasi peta menggunakan Leaflet
-                                var map = L.map('map').setView([initialLat, initialLng], 13);
+                                var map = L.map('map').setView([initialLat, initialLng], 17);
                         
                                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                                     maxZoom: 19,

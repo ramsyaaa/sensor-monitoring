@@ -19,7 +19,7 @@
                     ],
                 ])
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-white">Daftar Device</h2>
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-white">Device List</h2>
                 </div>
 
                 <div class="overflow-x-auto bg-white px-6 py-10 rounded-lg shadow-lg">

@@ -148,7 +148,7 @@
 
                     // Tentukan ikon berdasarkan sumber data
                     var iconUrl = device.source === 'data' 
-                        ? 'https://webplus-cn-shenzhen-s-5decf7913c3f2876a5adc591.oss-cn-shenzhen.aliyuncs.com/fileUpload/productImg/20210813/20210813134239_48.jpg'
+                        ? '{{ asset('asset/img/Icon/router_12068565.png') }}'
                         : getSensorIcon(device.sensor_name);
 
                     // Konfigurasi ikon marker
