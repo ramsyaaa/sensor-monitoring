@@ -191,7 +191,7 @@
         currentSensorId = id; // Simpan ID sensor yang dikirim
         document.getElementById("startDate").value = ""; // Reset start date input
         document.getElementById("endDate").value = "";   // Reset end date input
-        const url = `{{ url('sensors') }}/${id}/realtime`;
+        const url = `{{ secure_url('sensors') }}/${id}/realtime`;
 
         console.log("Fetching data from:", url); // Log URL untuk memeriksa
         fetch(url, {
@@ -231,7 +231,7 @@
         }
         
         // Jika ingin mengirim data filter, Anda bisa melakukannya dengan fetch
-        const filterUrl = `{{ url('sensors') }}/${currentSensorId}/realtime?startDate=${startDate}&endDate=${endDate}`;
+        const filterUrl = `{{ secure_url('sensors') }}/${currentSensorId}/realtime?startDate=${startDate}&endDate=${endDate}`;
 
         fetch(filterUrl, {
                 method: "GET",
