@@ -82,6 +82,7 @@ class SensorController extends Controller
                 'Content-Type' => 'application/json',
             ])
             ->post(env('URL_API') . '/api/v1/geomapping/sensor-list', $jsonData);
+            dd($response);
 
         if ($response->successful()) {
             $sensors = $response->json();
@@ -94,7 +95,6 @@ class SensorController extends Controller
             // Mengambil elemen pertama dari hasil filter, atau null jika tidak ditemukan
             $data['sensor'] = !empty($sensor) ? array_values($sensor)[0] : null;
         }else{
-            dd($response);
             return back()->withErrors('Gagal mengambil data dari API: ' . $response->body());
         }
         return view('sensor.edit', $data);
