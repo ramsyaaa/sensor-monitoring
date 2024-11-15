@@ -2,7 +2,7 @@
 
 @section('content')
     <div x-data="{ sidebar: true, popupNavbar: false }" class="relative flex">
-        <div class="absolute w-full h-[250px] bg-[#14176c] -z-10">
+        <div class="absolute w-full h-[250px] bg-[#083C76] -z-10">
 
         </div>
         @include('components.sidebar')
@@ -46,7 +46,7 @@
                                     </td>
                                     <td class="py-3 px-6 text-center flex items-center justify-center gap-2">
                                         <a href="{{ route('device.show', ['id' => $item['id'] ?? '']) }}"
-                                            class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200">Detail</a>
+                                            class="bg-[#083C76] text-white px-4 py-2 rounded hover:bg-opacity-90 transition duration-200">Sensor List</a>
                                     </td>
                                 </tr>
                             @endforeach

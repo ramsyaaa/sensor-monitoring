@@ -50,7 +50,7 @@
                     <label for="endDate">End Date:</label>
                     <input type="datetime-local" id="endDate" class="border border-gray-300 rounded p-2">
                 </div>
-                <button onclick="filterData()" class="bg-[#14176c] mt-2 md:mt-0 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Apply Filter</button>
+                <button onclick="filterData()" class="bg-[#083C76] mt-2 md:mt-0 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Apply Filter</button>
             </div>
             
             <div class="md:flex">
