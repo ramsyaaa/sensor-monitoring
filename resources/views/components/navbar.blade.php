@@ -24,7 +24,7 @@
             </a> --}}
             <form action="{{ route('auth.logout') }}" method="POST" class="w-full">
                 @csrf
-                <button type="submit" class="w-full flex justify-center items-center bg-red-500 text-white px-4 py-2 rounded-lg mt-4">Logout</button>
+                <button type="submit" class="w-full flex justify-center items-center bg-red-600 text-white px-4 py-2 rounded-lg mt-4">Logout</button>
             </form>
         </div>
     </div>

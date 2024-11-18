@@ -14,7 +14,7 @@
     }
 </style>
     <div x-data="{ sidebar: true, popupNavbar: false }" class="relative flex">
-        <div class="absolute w-full h-[250px] bg-[#14176c] -z-10">
+        <div class="absolute w-full h-[250px] bg-[#083C76] -z-10">
 
         </div>
         @include('components.sidebar')
@@ -35,14 +35,52 @@
                 </div>
 
                 <div class="overflow-x-auto bg-white px-6 py-10 rounded-lg shadow-lg">
-                    <form method="GET" class="flex gap-4 items-center mb-4">
-                        <select name="device" id="device" class="w-full px-4 py-2 rounded-lg border">
-                            <option value="">Pilih</option>
-                            @foreach ($device as $item)
-                            <option @if($item['id'] == request()->device) selected @endif value="{{ $item['id'] }}">{{ $item['device_name'] }}</option>    
-                            @endforeach
-                        </select>
-                        <button type="submit" class="px-4 py-2 text-white bg-blue-500 rounded-lg shadow-lg">Search</button>
+                    <form method="GET" class="mb-4">
+                        <div class="lg:flex lg:gap-2 w-full">
+                            <div class="w-full flex flex-col gap-2">
+                                <h3 class="font-bold">Group</h3>
+                                <select name="group_id" id="group_id" class="w-full px-4 py-2 rounded-lg border mb-4" onchange="this.form.submit()">
+                                    <option value="">Select Group</option>
+                                    @foreach ($groups as $item)
+                                    <option @if($item['group_id'] == $group_id) selected @endif value="{{ $item['group_id'] }}">{{ $item['group_name'] }}</option>    
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="w-full flex flex-col gap-2">
+                                <h3 class="font-bold">City</h3>
+                                <select name="city_id" id="city_id" class="w-full px-4 py-2 rounded-lg border mb-4" onchange="this.form.submit()">
+                                    <option value="">Select City</option>
+                                    @foreach ($cities as $item)
+                                    <option @if($item['city_id'] == $city_id) selected @endif value="{{ $item['city_id'] }}">{{ $item['city_name'] }}</option>    
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="lg:flex lg:gap-2 w-full">
+                            @if(count($districts) > 0)
+                            <div class="w-full flex flex-col gap-2">
+                                <h3 class="font-bold">District</h3>
+                                <select name="district_id" id="district_id" class="w-full px-4 py-2 rounded-lg border mb-4" onchange="this.form.submit()">
+                                    <option value="">Select District</option>
+                                    @foreach ($districts as $item)
+                                    <option @if($item['district_id'] == $district_id) selected @endif value="{{ $item['district_id'] }}">{{ $item['district_name'] }}</option>    
+                                    @endforeach
+                                </select>
+                            </div>
+                            @endif
+                            @if(count($subdistricts) > 0)
+                            <div class="w-full flex flex-col gap-2">
+                                <h3 class="font-bold">Subdistrict</h3>
+                                <select name="subdistrict_id" id="subdistrict_id" class="w-full px-4 py-2 rounded-lg border mb-4" onchange="this.form.submit()">
+                                    <option value="">Select Subdistrict</option>
+                                    @foreach ($subdistricts as $item)
+                                    <option @if($item['subdistrict_id'] == $subdistrict_id) selected @endif value="{{ $item['subdistrict_id'] }}">{{ $item['subdistrict_name'] }}</option>    
+                                    @endforeach
+                                </select>
+                            </div>
+                            @endif
+                        </div>
                     </form>
                     <div id="map" style="width: 100%; height: 500px;"></div>
                 </div>
@@ -86,8 +124,8 @@
             // Tentukan lokasi default (Bandung) jika array devices kosong
             var defaultLat = -6.9175;
             var defaultLng = 107.6191;
-            var initialLat = devices.length > 0 ? devices[0].lat : defaultLat;
-            var initialLng = devices.length > 0 ? devices[0].lng : defaultLng;
+            var initialLat = devices != null && devices.length > 0 ? devices[0].lat : defaultLat;
+            var initialLng = devices != null && devices.length > 0 ? devices[0].lng : defaultLng;
 
             // Inisialisasi peta dan atur tampilan awal pada posisi perangkat pertama atau default dengan zoom lebih dekat
             var map = L.map('map').setView([initialLat, initialLng], 15); // Zoom pada 15
@@ -135,44 +173,59 @@
                 }
             }
 
-            // Menambahkan marker untuk setiap perangkat
-            devices.forEach(function(device) {
-                if (device.lat && device.lng) {  // Pastikan lat dan lng ada
-                    var position = [parseFloat(device.lat), parseFloat(device.lng)];
-                    
-                    // // Jika sumbernya dari data_list, tambahkan offset agar tidak menumpuk
-                    // if (device.source === 'data_list') {
-                    //     position[0] += 0.00005; // offset latitude
-                    //     position[1] += 0.00005; // offset longitude
-                    // }
+            if(devices != null){
+                // Menambahkan marker untuk setiap perangkat
+                devices.forEach(function (device) {
+                    if (device.lat && device.lng) { // Pastikan lat dan lng ada
+                        var position = [parseFloat(device.lat), parseFloat(device.lng)];
 
-                    // Tentukan ikon berdasarkan sumber data
-                    var iconUrl = device.source === 'data' 
-                        ? '{{ asset('asset/img/Icon/router_12068565.png') }}'
-                        : getSensorIcon(device.sensor_name);
+                        // Tentukan ikon berdasarkan sumber data
+                        var iconUrl = '{{ asset('asset/img/Icon/router_12068565.png') }}';
 
-                    // Konfigurasi ikon marker
-                    var icon = L.icon({
-                        iconUrl: iconUrl,
-                        iconSize: [32, 32], // Ukuran ikon bisa disesuaikan
-                        iconAnchor: [16, 32] // Atur posisi anchor agar ikon terlihat bagus
-                    });
-
-                    // Tambahkan posisi ke bounds
-                    bounds.push(position);
-                    
-                    // Tambahkan marker ke peta
-                    L.marker(position, { icon: icon }).addTo(map)
-                        .bindPopup(device.source === 'data_list' ? device.sensor_name : device.device_name)
-                        .on('click', function() {
-                            if (device.source === 'data') {
-                                showDetail(device.id);
-                            } else if (device.source === 'data_list') {
-                                getRealtime(device.id);
-                            }
+                        // Konfigurasi ikon marker
+                        var icon = L.icon({
+                            iconUrl: iconUrl,
+                            iconSize: [32, 32], // Ukuran ikon bisa disesuaikan
+                            iconAnchor: [16, 32] // Atur posisi anchor agar ikon terlihat bagus
                         });
-                } 
-            });
+
+                        // Tambahkan posisi ke bounds
+                        bounds.push(position);
+
+                        // Buat marker
+                        var marker = L.marker(position, { icon: icon }).addTo(map);
+
+                        // Buat konten popup dinamis
+                        var popupContent = `
+                            <div>
+                                <strong>Device Name:</strong> ${device.device_name}<br>
+                                <strong>Device Number:</strong> ${device.device_no}<br>
+                                <strong>Address:</strong> ${device.address}<br>
+                                <strong>Point Code:</strong> ${device.point_code}<br>
+                                <strong>Location Info:</strong> ${device.location_information}<br>
+                                <strong>Note:</strong> ${device.note}<br>
+                                <strong>Surrounding Waters:</strong> ${device.surrounding_waters}<br>
+                                <strong>Electrical Panel:</strong> ${device.electrical_panel}<br>
+                            </div>
+                        `;
+
+                        // Tambahkan event hover (mouseover dan mouseout)
+                        marker.on('mouseover', function () {
+                            marker.bindPopup(popupContent).openPopup();
+                        });
+
+                        marker.on('mouseout', function () {
+                            marker.closePopup();
+                        });
+
+                        // Tambahkan event click untuk menampilkan detail
+                        marker.on('click', function () {
+                            showDetail(device.id);
+                        });
+                    }
+                });
+            }
+
 
             // Sesuaikan peta agar semua marker terlihat
             if (bounds.length > 0) {

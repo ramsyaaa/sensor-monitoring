@@ -2,7 +2,7 @@
 
 @section('content')
     <div x-data="{sidebar:true, popupNavbar:false}" class="relative flex">
-        <div class="absolute w-full h-[250px] bg-[#14176c] -z-10">
+        <div class="absolute w-full h-[250px] bg-[#083C76] -z-10">
 
         </div>
         @include('components.sidebar')
