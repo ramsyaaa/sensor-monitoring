@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Device\DeviceController as DeviceDeviceController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Device\DeviceController;
 use App\Http\Controllers\Map\MapController;
@@ -20,6 +21,8 @@ Route::middleware([RedirectIfAuthenticated::class])->group(function () {
 
 Route::middleware([CheckSession::class])->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('auth.logout');
+
+    Route::get('devices/list', [DeviceDeviceController::class, 'getDeviceList'])->name('api.device.list');
     
     Route::get('devices', [DeviceController::class, 'index'])->name('device.index');
     Route::get('devices/create', [DeviceController::class, 'create'])->name('device.create');
