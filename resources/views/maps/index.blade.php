@@ -120,91 +120,6 @@
             document.getElementById('detail-panel').classList.add('invisible-panel');
             document.getElementById('detail-content').innerHTML = ''; // Kosongkan konten
         }
-        // window.onload = function() {
-    
-        //     var devices = {!! json_encode($allDevices) !!};
-
-        //     // Tentukan lokasi default (Bandung) jika array devices kosong
-        //     var defaultLat = -6.9175;
-        //     var defaultLng = 107.6191;
-        //     var initialLat = devices != null && devices.length > 0 ? devices[0].lat : defaultLat;
-        //     var initialLng = devices != null && devices.length > 0 ? devices[0].lng : defaultLng;
-
-        //     // Inisialisasi peta dan atur tampilan awal pada posisi perangkat pertama atau default dengan zoom lebih dekat
-        //     var map = L.map('map').setView([initialLat, initialLng], 15); // Zoom pada 15
-
-        //     // Tambahkan layer tile dari OpenStreetMap
-        //     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        //         maxZoom: 19,
-        //         attribution: '© OpenStreetMap contributors'
-        //     }).addTo(map);
-
-        //     // Variabel untuk menyimpan semua posisi marker
-        //     var bounds = [];
-
-        //     if(devices != null){
-        //         // Menambahkan marker untuk setiap perangkat
-        //         devices.forEach(function (device) {
-        //             if (device.lat && device.lng) { // Pastikan lat dan lng ada
-        //                 var position = [parseFloat(device.lat), parseFloat(device.lng)];
-
-        //                 // Tentukan ikon berdasarkan sumber data
-        //                 var iconUrl = '{{ asset('asset/img/Icon/router_12068565.png') }}';
-
-        //                 // Konfigurasi ikon marker
-        //                 var icon = L.icon({
-        //                     iconUrl: iconUrl,
-        //                     iconSize: [32, 32], // Ukuran ikon bisa disesuaikan
-        //                     iconAnchor: [16, 32] // Atur posisi anchor agar ikon terlihat bagus
-        //                 });
-
-        //                 // Tambahkan posisi ke bounds
-        //                 bounds.push(position);
-
-        //                 // Buat marker
-        //                 var marker = L.marker(position, { icon: icon }).addTo(map);
-
-        //                 // Buat konten popup dinamis
-        //                 var popupContent = `
-        //                     <div>
-        //                         <strong>Device Name:</strong> ${device.device_name}<br>
-        //                         <strong>Device Number:</strong> ${device.device_no}<br>
-        //                         <strong>Address:</strong> ${device.address}<br>
-        //                         <strong>Point Code:</strong> ${device.point_code}<br>
-        //                         <strong>Location Info:</strong> ${device.location_information}<br>
-        //                         <strong>Note:</strong> ${device.note}<br>
-        //                         <strong>Surrounding Waters:</strong> ${device.surrounding_waters}<br>
-        //                         <strong>Electrical Panel:</strong> ${device.electrical_panel}<br>
-        //                     </div>
-        //                 `;
-
-        //                 // Tambahkan event hover (mouseover dan mouseout)
-        //                 marker.on('mouseover', function () {
-        //                     marker.bindPopup(popupContent).openPopup();
-        //                 });
-
-        //                 marker.on('mouseout', function () {
-        //                     marker.closePopup();
-        //                 });
-
-        //                 // Tambahkan event click untuk menampilkan detail
-        //                 marker.on('click', function () {
-        //                     showDetail(device.id);
-        //                 });
-        //             }
-        //         });
-        //     }
-
-
-        //     // Sesuaikan peta agar semua marker terlihat
-        //     if (bounds.length > 0) {
-        //         map.fitBounds(bounds);
-        //     } else {
-        //         map.setView([defaultLat, defaultLng], 15); // Zoom pada 15 jika tidak ada marker
-        //     }
-
-        //     map.invalidateSize();
-        // };
 
         window.onload = function () {
             var devices = {!! json_encode($allDevices) !!};
@@ -313,7 +228,7 @@
             var query = searchInput.value;
 
             // Lakukan permintaan AJAX ke URL
-            fetch('{{ route('api.device.list') }}?from_api=1&search=' + encodeURIComponent(query))
+            fetch('/devices/list?from_api=1&search=' + encodeURIComponent(query))
                 .then(response => response.json())
                 .then(data => {
                     if (data.data) {
