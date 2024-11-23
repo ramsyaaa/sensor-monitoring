@@ -28,7 +28,7 @@ class DeviceController extends Controller
                 'Content-Type' => 'application/json',
             ])
             ->get(env('URL_API') . '/api/v1/geomapping/device-list', [
-
+                'keyword' => $search,
             ]);
 
         $data['allDevices'] = [];
