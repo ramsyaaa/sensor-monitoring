@@ -246,6 +246,14 @@
             if (e.key === 'Enter') {
                 searchDevices();
             }
+
+            // Clear debounce timeout setiap kali keydown terjadi
+            clearTimeout(debounceTimeout);
+
+            // Atur debounce untuk memanggil searchDevices setelah 300 ms
+            debounceTimeout = setTimeout(() => {
+                searchDevices();
+            }, 300);
         });
 
         // Event ketika input kehilangan fokus (blur)
