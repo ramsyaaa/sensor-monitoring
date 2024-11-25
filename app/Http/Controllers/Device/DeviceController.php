@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\Http;
 
 class DeviceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $data['group_id'] = $request->group_id ? $request->group_id : null;
         $token = session('access_token'); // Ambil token dari session
 
         if (!$token) {
@@ -18,9 +19,10 @@ class DeviceController extends Controller
 
         // Menyiapkan data JSON untuk dikirim
         $jsonData = [
-            'userId' => 99837,
-            'currPage' => 1,
-            'pageSize' => 10,
+            'group_id' => $data['group_id'],
+            'city_id' => null,
+            'district_id' => null,
+            'subdistrict_id' => null,
         ];
 
         // Mengirim permintaan POST ke API dengan JSON di body
@@ -30,14 +32,31 @@ class DeviceController extends Controller
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
             ])
-            ->post(env('URL_API') . '/api/v1/get-device', $jsonData);
+            ->get(env('URL_API') . '/api/v1/geomapping/device-list', $jsonData);
 
         // Cek apakah response berhasil
         if ($response->successful()) {
-            $data = $response->json(); // Mengambil data dari response
-            $data = $data['data'];
-            return view('device.index', compact('data'));
+            $responseJson = $response->json(); // Mengambil data dari response
+            $response_data = $responseJson['data'];
+            $data['devices'] = $response_data;
+
+            $response = Http::timeout(20)->withoutVerifying()
+            ->withHeaders([
+                'Authorization' => 'Bearer ' . $token,
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ])
+            ->get(env('URL_API') . '/api/v1/geomapping/group-list');
+
+        $data['groups'] = [];
+        if ($response->successful()) {
+            $response = $response->json();
+            $data['groups'] = $response['data'];
+        }
+
+            return view('device.index', $data);
         } else {
+            dd($response->body());
             return back()->withErrors('Gagal mengambil data dari API: ' . $response->body());
         }
     }
