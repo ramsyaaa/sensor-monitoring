@@ -42,16 +42,20 @@
                         </thead>
                         <tbody class="text-gray-700 text-sm font-light">
                             @foreach ($sensors as $index => $sensor)
-                            <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <tr class="border-b border-gray-200 hover:bg-gray-100 {{ $sensor['isLine'] == 0 ? 'text-gray-300' : 'text-black' }}">
                                 <td class="py-3 px-6 text-left">{{ $loop->iteration }}</td>
-                                <td class="py-3 px-6 text-left flex gap-4 items-start">
-                                    <div>
-                                        <img class="max-w-[40px]" src="{{ checkUrlIcon($sensor['sensorName']) }}" alt="">
+                                <td class="py-3 px-6 flex gap-2 items-center">
+                                    <div class="w-[10px] h-[10px] {{ $sensor['isLine'] == 1 ? 'bg-green-500' : 'bg-red-500' }} rounded-full">
                                     </div>
-                                    <div>
-                                        <span class="font-bold text-[16px]">{{ $sensor['sensorName'] }}</span>
-                                        <br>
-                                        <span class="text-[12px]">ID:{{ $sensor['id'] }}</span>
+                                    <div class="text-left flex gap-4 items-start">
+                                        <div>
+                                            <img class="max-w-[40px]" src="{{ checkUrlIcon($sensor['sensorName']) }}" alt="">
+                                        </div>
+                                        <div>
+                                            <span class="font-bold text-[16px]">{{ $sensor['sensorName'] }}</span>
+                                            <br>
+                                            <span class="text-[12px]">ID:{{ $sensor['id'] }}</span>
+                                        </div>
                                     </div>
                                 </td>
                                 <td class="py-3 px-6 text-left">

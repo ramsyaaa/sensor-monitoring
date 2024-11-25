@@ -85,8 +85,8 @@
                             <span>ID: ${item.id ?? '-'}</span>
                         </td>
                         <td class="py-3 px-6 text-center flex items-center justify-center gap-2">
-                            <a href="/device/edit/${item.id ?? ''}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-opacity-90 transition duration-200">Edit</a>
-                            <a href="/device/show/${item.id ?? ''}" class="bg-[#083C76] text-white px-4 py-2 rounded hover:bg-opacity-90 transition duration-200">Sensor List</a>
+                            <a href="/devices/${item.id ?? ''}/edit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-opacity-90 transition duration-200">Edit</a>
+                            <a href="/devices/${item.id ?? ''}" class="bg-[#083C76] text-white px-4 py-2 rounded hover:bg-opacity-90 transition duration-200">Sensor List</a>
                         </td>
                     </tr>
                 `;
