@@ -26,7 +26,7 @@
                     <div class="my-4">
                         <form action="" method="GET" id="groupForm">
                             <select name="group_id" id="group_id" class="w-full px-4 py-2 border rounded-lg" onchange="document.getElementById('groupForm').submit();">
-                                <option value="">Select Group</option>
+                                <option value="">All Group</option>
                                 @foreach ($groups as $group)
                                     <option @if($group['group_id'] == $group_id) selected @endif value="{{ $group['group_id'] }}">
                                         {{ $group['group_name'] }}
