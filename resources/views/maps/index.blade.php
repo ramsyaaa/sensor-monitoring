@@ -190,6 +190,22 @@
                                 <strong>Address:</strong> ${device.address}<br>
                                 <strong>Point Code:</strong> ${device.point_code}<br>
                                 <strong>Location Info:</strong> ${device.location_information}<br>
+                                <div class="relative w-full h-[10px] mt-2">
+                                    <div class="w-full flex items-center">
+                                        <div class="w-1/3 bg-red-500 h-[10px]">
+
+                                        </div>
+                                        <div class="w-1/3 bg-yellow-500 h-[10px]">
+
+                                        </div>
+                                        <div class="w-1/3 bg-green-500 h-[10px]">
+
+                                        </div>
+                                    </div>
+                                    <div class="h-[10px] w-[3px] absolute left-[90%] top-0 bg-white">
+
+                                    </div>
+                                </div>
                             </div>
                         `;
 
