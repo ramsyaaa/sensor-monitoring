@@ -5,21 +5,22 @@
         <div class="absolute w-full h-[250px] bg-[#083C76] -z-10">
 
         </div>
-        @include('components.sidebar')
-        <div class="min-h-screen" :class="sidebar ? 'w-10/12' : 'w-full'">
+        <div class="min-h-screen w-full">
             @include('components.navbar')
-            <div class="container mx-auto p-4 max-h-screen overflow-auto">
-                @include('components.breadcrumb', [
-                    'lists' => [
-                        [
-                            'title' => 'Devices',
-                            'route' => '#',
-                            'is_active' => true,
+            <div class="mx-auto max-h-screen overflow-auto">
+                <div class="px-4">
+                    @include('components.breadcrumb', [
+                        'lists' => [
+                            [
+                                'title' => 'Devices',
+                                'route' => '#',
+                                'is_active' => true,
+                            ],
                         ],
-                    ],
-                ])
-                <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-white">Device List</h2>
+                    ])
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-white">Device List</h2>
+                    </div>
                 </div>
 
                 <div class="overflow-x-auto bg-white px-6 py-10 rounded-lg shadow-lg">
@@ -40,6 +41,7 @@
                             <tr class="text-[12px]">
                                 <th class="py-3 px-6 text-left">No</th>
                                 <th class="py-3 px-6 text-center">Name</th>
+                                <th class="py-3 px-6 text-center">Status</th>
                                 <th class="py-3 px-6 text-left">Serial Number</th>
                                 <th class="py-3 px-6 text-center">Action</th>
                             </tr>
@@ -74,10 +76,15 @@
     
             paginatedData.forEach((item, index) => {
                 const row = `
-                    <tr class="border-b border-gray-200 hover:bg-gray-100 ${item.is_line == 0 ? 'text-gray-300' : 'text-black'}">
+                    <tr class="border-b border-gray-200 hover:bg-gray-100 ${item.is_line === 0 ? 'text-gray-300' : 'text-black'}">
                         <td class="py-3 px-6 text-left">${start + index + 1}</td>
                         <td class="py-3 px-6 text-left flex gap-1 items-center">
-                            <span class="w-[10px] h-[10px] ${item.is_line == 1 ? 'bg-green-500' : 'bg-red-500'} rounded-full"></span>${item.device_name ?? '-'}
+                            ${item.device_name ?? '-'}
+                        </td>
+                        <td class="py-3 px-6">
+                            <div class="px-2 py-1 text-center text-white rounded-lg shadow-lg ${item.is_line === 1 ? 'bg-green-500' : 'bg-red-500'}">
+                                ${item.is_line === 1 ? 'online' : 'offline'}
+                            </div>
                         </td>
                         <td class="py-3 px-6 text-left">
                             <span class="text-[16px]">SN: ${item.device_no ?? '-'}</span>
@@ -85,11 +92,15 @@
                             <span>ID: ${item.id ?? '-'}</span>
                         </td>
                         <td class="py-3 px-6 text-center flex items-center justify-center gap-2">
-                            <a href="/devices/${item.id ?? ''}/edit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-opacity-90 transition duration-200">Edit</a>
-                            <a href="/devices/${item.id ?? ''}" class="bg-[#083C76] text-white px-4 py-2 rounded hover:bg-opacity-90 transition duration-200">Sensor List</a>
+                            <a href="/devices/${item.id ?? ''}/edit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-opacity-90 transition duration-200">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="/devices/${item.id ?? ''}" class="bg-[#083C76] text-white px-4 py-2 rounded hover:bg-opacity-90 transition duration-200">
+                                <i class="fas fa-list"></i>
                         </td>
                     </tr>
                 `;
+
                 tableBody.innerHTML += row;
             });
         }

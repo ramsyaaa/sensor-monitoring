@@ -5,26 +5,27 @@
     <div class="absolute w-full h-[250px] bg-[#083C76] -z-10">
 
     </div>
-    @include('components.sidebar')
-    <div class="min-h-screen" :class="sidebar ? 'w-10/12' : 'w-full'">
+    <div class="min-h-screen w-full">
         @include('components.navbar')
-        <div class="container mx-auto px-4 pt-4 pb-12 max-h-screen overflow-auto hide-scrollbar">
-            @include('components.breadcrumb' ,[
-                'lists' => [
-                    [
-                        'title' => 'Devices',
-                        'route' => route('device.index'),
-                        'is_active' => false
-                    ],
-                    [
-                        'title' => 'Edit',
-                        'route' => '#',
-                        'is_active' => true
+        <div class="mx-auto pt-4 pb-12 max-h-screen overflow-auto hide-scrollbar">
+            <div class="px-4">
+                @include('components.breadcrumb' ,[
+                    'lists' => [
+                        [
+                            'title' => 'Devices',
+                            'route' => route('device.index'),
+                            'is_active' => false
+                        ],
+                        [
+                            'title' => 'Edit',
+                            'route' => '#',
+                            'is_active' => true
+                        ]
                     ]
-                ]
-            ])
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-white">Edit Device</h2>
+                ])
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-white">Edit Device</h2>
+                </div>
             </div>
             <div class="overflow-x-auto bg-white rounded-lg px-6 py-10 shadow-lg">
                 <form action="{{ route('device.update', ['id' => $device['id']]) }}" method="POST">
@@ -193,8 +194,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         // Data lat dan lng dari server (gunakan null jika tidak ada data)
-        const defaultLat = {{ $device['lat'] ?? '-6.914744' }};
-        const defaultLng = {{ $device['lng'] ?? '107.609810' }};
+        const defaultLat = "{{ $device['lat'] ?? '-6.914744' }}";
+        const defaultLng = "{{ $device['lng'] ?? '107.609810' }}";
         
         // Inisialisasi peta dengan posisi default
         const map = L.map('map').setView([defaultLat, defaultLng], 18); 
@@ -207,8 +208,8 @@
 
         // Tambahkan marker pada posisi default
         let marker = L.marker([defaultLat, defaultLng]).addTo(map);
-        document.querySelector('input[x-model="lat"]').value = {{ $device['lat'] ?? '' }};
-        document.querySelector('input[x-model="lng"]').value = {{ $device['lng'] ?? '' }};
+        document.querySelector('input[x-model="lat"]').value = "{{ $device['lat'] ?? '' }}";
+        document.querySelector('input[x-model="lng"]').value = "{{ $device['lng'] ?? '' }}";
 
         // Update marker dan input lat/lng saat peta di-klik
         map.on('click', function(e) {

@@ -5,28 +5,28 @@
         <div class="absolute w-full h-[250px] bg-[#083C76] -z-10">
 
         </div>
-        @include('components.sidebar')
-        <div class="min-h-screen" :class="sidebar ? 'w-10/12' : 'w-full'">
+        <div class="min-h-screen w-full">
             @include('components.navbar')
-            <div class="container mx-auto p-4 max-h-screen overflow-auto">
-                @include('components.breadcrumb' ,[
-                    'lists' => [
-                        [
-                            'title' => 'Devices',
-                            'route' => route('device.index'),
-                            'is_active' => false
-                        ],
-                        [
-                            'title' => 'Detail',
-                            'route' => '#',
-                            'is_active' => true
+            <div class="mx-auto max-h-screen overflow-auto">
+                <div class="px-4">
+                    @include('components.breadcrumb' ,[
+                        'lists' => [
+                            [
+                                'title' => 'Devices',
+                                'route' => route('device.index'),
+                                'is_active' => false
+                            ],
+                            [
+                                'title' => 'Detail',
+                                'route' => '#',
+                                'is_active' => true
+                            ]
                         ]
-                    ]
-                ])
-                <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-white">Data Sensor Device</h2>
+                    ])
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-white">Data Sensor Device</h2>
+                    </div>
                 </div>
-
                 <div class="overflow-x-auto bg-white px-6 pb-10 rounded-lg shadow-lg">
                     <div class="py-5 font-bold text-[20px]">
                         Device ID:{{ $data['device']['id'] }}
@@ -65,8 +65,15 @@
                                 </td>
                                 <td class="py-3 px-6">
                                     <div class="flex gap-2 justify-center">
-                                        <a href="javascript:void(0)" onclick="getRealtime({{ $sensor['id'] }})" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200">RT / History Curv</a>
-                                        <a href="{{ route('sensor.edit', ['id' => $sensor['id'], 'device' => $data['device']['id'] ]) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Update</a>
+                                        <a href="javascript:void(0)" onclick="getRealtime({{ $sensor['id'] }})" 
+                                            class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200 flex items-center gap-2">
+                                            <i class="fas fa-chart-line"></i>
+                                        </a>
+                                        <a href="{{ route('sensor.edit', ['id' => $sensor['id'], 'device' => $data['device']['id'] ]) }}" 
+                                            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200 flex items-center gap-2">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+
                                     </div>
                                 </td>
                             </tr>

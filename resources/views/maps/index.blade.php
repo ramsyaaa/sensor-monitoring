@@ -17,75 +17,21 @@
         <div class="absolute w-full h-[250px] bg-[#083C76] -z-10">
 
         </div>
-        @include('components.sidebar')
-        <div class="min-h-screen" :class="sidebar ? 'w-10/12' : 'w-full'">
+        <div class="min-h-screen w-full">
             @include('components.navbar')
-            <div class="container mx-auto p-4 max-h-screen overflow-auto">
-                @include('components.breadcrumb', [
-                    'lists' => [
-                        [
-                            'title' => 'Maps',
-                            'route' => '#',
-                            'is_active' => true,
-                        ],
-                    ],
-                ])
-                <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-white">Maps</h2>
+            <div class="relative mx-auto max-h-screen overflow-auto">
+                <div class="overflow-x-auto bg-white rounded-lg shadow-lg h-screen">
+                    <div id="map" style="width: 100%; height: 100%;"></div>
                 </div>
-
-                <div class="overflow-x-auto bg-white px-6 py-10 rounded-lg shadow-lg">
+                <div class="absolute top-[12px] left-[48px]" style="z-index: 1000">
                     <div class="lg:flex lg:gap-2 w-full">
-                        <div class="w-full flex flex-col gap-2">
-                            {{-- <h3 class="font-bold">Group</h3> --}}
-                            <input type="text" class="w-full px-4 py-2 rounded-lg border mb-4" name="" id="deviceSearch">
+                        <div class="w-[300px] flex flex-col gap-2 relative">
+                            <input type="text" class="w-full pl-4 pr-10 py-2 rounded-lg border mb-4 shadow-lg" name="" placeholder="Search" id="deviceSearch">
+                            <div class="absolute right-4 top-2 text-gray-500 cursor-pointer" onclick="document.getElementById('deviceSearch').focus();">
+                                <i class="fas fa-search"></i>
+                            </div>
                         </div>
-                        {{-- <div class="w-full flex flex-col gap-2">
-                            <h3 class="font-bold">Group</h3>
-                            <select name="group_id" id="group_id" class="w-full px-4 py-2 rounded-lg border mb-4" onchange="this.form.submit()">
-                                <option value="">Select Group</option>
-                                @foreach ($groups as $item)
-                                <option @if($item['group_id'] == $group_id) selected @endif value="{{ $item['group_id'] }}">{{ $item['group_name'] }}</option>    
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="w-full flex flex-col gap-2">
-                            <h3 class="font-bold">City</h3>
-                            <select name="city_id" id="city_id" class="w-full px-4 py-2 rounded-lg border mb-4" onchange="this.form.submit()">
-                                <option value="">Select City</option>
-                                @foreach ($cities as $item)
-                                <option @if($item['city_id'] == $city_id) selected @endif value="{{ $item['city_id'] }}">{{ $item['city_name'] }}</option>    
-                                @endforeach
-                            </select>
-                        </div> --}}
                     </div>
-                    
-                    {{-- <div class="lg:flex lg:gap-2 w-full">
-                        @if(count($districts) > 0)
-                        <div class="w-full flex flex-col gap-2">
-                            <h3 class="font-bold">District</h3>
-                            <select name="district_id" id="district_id" class="w-full px-4 py-2 rounded-lg border mb-4" onchange="this.form.submit()">
-                                <option value="">Select District</option>
-                                @foreach ($districts as $item)
-                                <option @if($item['district_id'] == $district_id) selected @endif value="{{ $item['district_id'] }}">{{ $item['district_name'] }}</option>    
-                                @endforeach
-                            </select>
-                        </div>
-                        @endif
-                        @if(count($subdistricts) > 0)
-                        <div class="w-full flex flex-col gap-2">
-                            <h3 class="font-bold">Subdistrict</h3>
-                            <select name="subdistrict_id" id="subdistrict_id" class="w-full px-4 py-2 rounded-lg border mb-4" onchange="this.form.submit()">
-                                <option value="">Select Subdistrict</option>
-                                @foreach ($subdistricts as $item)
-                                <option @if($item['subdistrict_id'] == $subdistrict_id) selected @endif value="{{ $item['subdistrict_id'] }}">{{ $item['subdistrict_name'] }}</option>    
-                                @endforeach
-                            </select>
-                        </div>
-                        @endif
-                    </div> --}}
-
-                    <div id="map" style="width: 100%; height: 500px;"></div>
                 </div>
                 <div id="detail-panel" style="z-index: 1000" class="fixed top-0 right-0 w-full md:w-2/3 h-screen bg-white shadow-lg p-4 invisible-panel overflow-y-auto">
                     <button onclick="closePanel()" class="absolute top-2 right-4 text-gray-600 text-[24px]">&times;</button>
