@@ -5,8 +5,7 @@
     <div class="absolute w-full h-[250px] bg-[#083C76] -z-10">
 
     </div>
-    @include('components.sidebar')
-    <div class="min-h-screen" :class="sidebar ? 'w-10/12' : 'w-full'">
+    <div class="min-h-screen w-full">
         @include('components.navbar')
         <div class="container mx-auto px-4 pt-4 pb-12 max-h-screen overflow-auto hide-scrollbar">
             @include('components.breadcrumb' ,[

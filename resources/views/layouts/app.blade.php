@@ -11,13 +11,14 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('asset/css/style.css') }}">
     <title>Sensor Monitoring - {{ $title ?? '' }}</title>
 
     <style>
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: 'Ubuntu', 'Roboto', 'Helvetica Neue', sans-serif;
         }
 
         #map {

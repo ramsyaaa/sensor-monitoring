@@ -23,6 +23,7 @@ class DeviceController extends Controller
             'city_id' => null,
             'district_id' => null,
             'subdistrict_id' => null,
+            'keyword' => null,
         ];
 
         // Mengirim permintaan POST ke API dengan JSON di body

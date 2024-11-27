@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Device\DeviceController as DeviceDeviceController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Device\DeviceController;
 use App\Http\Controllers\Map\MapController;
 use App\Http\Controllers\Sensor\SensorController;
@@ -21,6 +22,8 @@ Route::middleware([RedirectIfAuthenticated::class])->group(function () {
 
 Route::middleware([CheckSession::class])->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('auth.logout');
+
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('devices/list', [DeviceDeviceController::class, 'getDeviceList'])->name('api.device.list');
     
