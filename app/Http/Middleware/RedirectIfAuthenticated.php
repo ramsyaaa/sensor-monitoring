@@ -18,7 +18,7 @@ class RedirectIfAuthenticated
         // Cek apakah session token ada
         if (session('access_token')) {
             // Jika user sudah login, arahkan ke halaman home
-            return redirect()->route('device.index');
+            return redirect()->route('dashboard');
         }
 
         return $next($request);
