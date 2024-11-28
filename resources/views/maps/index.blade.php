@@ -181,7 +181,7 @@
 
                         // Tambahkan event hover (mouseover dan mouseout)
                         marker.on('mouseover', function () {
-                            marker.bindPopup(popupContent).openPopup();
+                            marker.bindPopup(popupContent, { minWidth: 300 }).openPopup();
                         });
 
                         marker.on('mouseout', function () {

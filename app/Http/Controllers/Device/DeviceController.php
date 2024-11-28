@@ -57,7 +57,6 @@ class DeviceController extends Controller
 
             return view('device.index', $data);
         } else {
-            dd($response->body());
             return back()->withErrors('Gagal mengambil data dari API: ' . $response->body());
         }
     }

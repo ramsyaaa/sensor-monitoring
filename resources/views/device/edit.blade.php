@@ -28,6 +28,11 @@
                 </div>
             </div>
             <div class="overflow-x-auto bg-white rounded-lg px-6 py-10 shadow-lg">
+                <div class="flex gap-2 mb-4">
+                    <div class="hover:scale-105 duration-200">
+                        <a href="{{ route('device.index') }}" class="px-4 py-2 rounded-lg text-white bg-red-500 shadow-lg">Back</a>
+                    </div>
+                </div>
                 <form action="{{ route('device.update', ['id' => $device['id']]) }}" method="POST">
                     @csrf
                     @method('PUT')

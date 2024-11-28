@@ -1,4 +1,4 @@
-<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script> <!-- Sertakan CanvasJS di sini -->
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 <style>
     .pagination { 
         display: flex; 
@@ -160,6 +160,10 @@
             }]
         });
         chart.render();
+
+        setTimeout(() => {
+            chart.render();
+        }, 0);
     }
 
     // Function to process the API response into chart data points
@@ -191,9 +195,8 @@
         currentSensorId = id; // Simpan ID sensor yang dikirim
         document.getElementById("startDate").value = ""; // Reset start date input
         document.getElementById("endDate").value = "";   // Reset end date input
-        const url = `{{ secure_url('sensors') }}/${id}/realtime`;
+        const url = `{{ url('sensors') }}/${id}/realtime`;
 
-        console.log("Fetching data from:", url); // Log URL untuk memeriksa
         fetch(url, {
             method: "GET",
             headers: {
@@ -209,9 +212,9 @@
         .then(data => {
             const sensorData = {
                 dataList: data.data.dataList,
-                sensorName: data.data.sensorName // Ambil nama sensor dari respons
+                sensorName: data.data.sensorName
             };
-            currentData = sensorData.dataList; // Simpan data untuk tabel
+            currentData = sensorData.dataList;
             document.dispatchEvent(new CustomEvent('chart-data-loaded', { detail: sensorData }));
         })
         .catch(error => {
@@ -224,14 +227,12 @@
         const startDate = document.getElementById("startDate").value;
         const endDate = document.getElementById("endDate").value;
 
-        // Periksa apakah ada filter yang diberikan
         if (!startDate && !endDate) {
-            getRealtime(currentSensorId); // Jika tidak ada filter, ambil data terbaru
+            getRealtime(currentSensorId);
             return;
         }
         
-        // Jika ingin mengirim data filter, Anda bisa melakukannya dengan fetch
-        const filterUrl = `{{ secure_url('sensors') }}/${currentSensorId}/realtime?startDate=${startDate}&endDate=${endDate}`;
+        const filterUrl = `{{ url('sensors') }}/${currentSensorId}/realtime?startDate=${startDate}&endDate=${endDate}`;
 
         fetch(filterUrl, {
                 method: "GET",
