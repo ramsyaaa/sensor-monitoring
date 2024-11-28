@@ -24,7 +24,7 @@
                             <div class="text-white text-[12px] px-2 truncate mt-2">
                                 Water level
                             </div>
-                            <div class="pb-6 text-white text-center text-[24px]">
+                            <div class="pb-6 text-center text-[24px] text-[#E94F07]">
                                 123 m/s
                             </div>
                         </a>
