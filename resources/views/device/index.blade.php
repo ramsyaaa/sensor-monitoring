@@ -78,12 +78,14 @@
                 const row = `
                     <tr class="border-b border-gray-200 hover:bg-gray-100 ${item.is_line === 0 ? 'text-gray-300' : 'text-black'}">
                         <td class="py-3 px-6 text-left">${start + index + 1}</td>
-                        <td class="py-3 px-6 text-left flex gap-1 items-center">
-                            ${item.device_name ?? '-'}
+                        <td class="py-3 px-6 text-left flex flex-col gap-1 items-start">
+                            <span class="text-[16px] font-bold">${item.device_name ?? '-'}</span>
+                            <span>${item.point_code ?? '-'}</span>
+                            <span>${item.group_name ?? '-'}</span>
                         </td>
                         <td class="py-3 px-6">
                             <div class="px-2 py-1 text-center text-white rounded-lg shadow-lg ${item.is_line === 1 ? 'bg-green-500' : 'bg-red-500'}">
-                                ${item.is_line === 1 ? 'online' : 'offline'}
+                                ${item.is_line === 1 ? 'Online' : 'Offline'}
                             </div>
                         </td>
                         <td class="py-3 px-6 text-left">
@@ -92,10 +94,10 @@
                             <span>ID: ${item.id ?? '-'}</span>
                         </td>
                         <td class="py-3 px-6 text-center flex items-center justify-center gap-2">
-                            <a href="/devices/${item.id ?? ''}/edit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-opacity-90 transition duration-200">
+                            <a title="Edit Device" href="/devices/${item.id ?? ''}/edit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-opacity-90 transition duration-200">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="/devices/${item.id ?? ''}" class="bg-[#083C76] text-white px-4 py-2 rounded hover:bg-opacity-90 transition duration-200">
+                            <a title="Sensor List" href="/devices/${item.id ?? ''}" class="bg-[#083C76] text-white px-4 py-2 rounded hover:bg-opacity-90 transition duration-200">
                                 <i class="fas fa-list"></i>
                         </td>
                     </tr>

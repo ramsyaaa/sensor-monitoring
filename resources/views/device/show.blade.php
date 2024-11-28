@@ -28,8 +28,13 @@
                     </div>
                 </div>
                 <div class="overflow-x-auto bg-white px-6 pb-10 rounded-lg shadow-lg">
-                    <div class="py-5 font-bold text-[20px]">
-                        Device ID:{{ $data['device']['id'] }}
+                    <div class="flex gap-2 items-center">
+                        <div class="hover:scale-105 duration-200">
+                            <a href="{{ route('device.index') }}" class="px-4 py-2 rounded-lg text-white bg-red-500 shadow-lg">Back</a>
+                        </div>
+                        <div class="py-5 font-bold text-[20px]">
+                            Device ID:{{ $data['device']['id'] }}
+                        </div>
                     </div>
                     <table class="min-w-full border border-gray-300 rounded-lg shadow-md">
                         <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -65,11 +70,11 @@
                                 </td>
                                 <td class="py-3 px-6">
                                     <div class="flex gap-2 justify-center">
-                                        <a href="javascript:void(0)" onclick="getRealtime({{ $sensor['id'] }})" 
+                                        <a title="Realtime Curv" href="javascript:void(0)" onclick="getRealtime({{ $sensor['id'] }})" 
                                             class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200 flex items-center gap-2">
                                             <i class="fas fa-chart-line"></i>
                                         </a>
-                                        <a href="{{ route('sensor.edit', ['id' => $sensor['id'], 'device' => $data['device']['id'] ]) }}" 
+                                        <a title="Edit Sensor" href="{{ route('sensor.edit', ['id' => $sensor['id'], 'device' => $data['device']['id'] ]) }}" 
                                             class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200 flex items-center gap-2">
                                             <i class="fas fa-edit"></i>
                                         </a>

@@ -6,7 +6,7 @@
         </div>
         <div class="min-h-screen w-full">
             @include('components.navbar')
-            <div class="container mx-auto p-4 max-h-screen overflow-auto">
+            <div class="mx-auto max-h-screen overflow-auto">
                 @include('components.breadcrumb' ,[
                     'lists' => [
                         [
@@ -31,6 +31,11 @@
                 </div>
 
                 <div class="overflow-x-auto bg-white px-6 pb-10 rounded-lg shadow-lg">
+                    <div class="flex my-4">
+                        <div class="hover:scale-105 duration-200">
+                            <a href="{{ route('device.show', ['id' => $device_id]) }}" class="px-4 py-2 rounded-lg text-white bg-red-500 shadow-lg">Back</a>
+                        </div>
+                    </div>
                     <div>
                         <form action="{{ route('sensor.update', ['id' => $id]) }}" method="POST">
                             @csrf
