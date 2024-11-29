@@ -221,6 +221,8 @@
                     if (data.data) {
                         // Perbarui peta dengan perangkat terbaru
                         initializeMap(data.data);
+                    }else{
+                        initializeMap([]);
                     }
                 })
                 .catch(error => {
