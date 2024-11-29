@@ -19,23 +19,16 @@
                         @foreach ($all_devices as $device)
                         <a href="{{ route('device.show', ['id' => $device['device_id']]) }}" class="{{ $device['is_line'] == 1 ? 'bg-[#083C76]' : 'bg-gray-500' }} py-2 rounded cursor-pointer hover:scale-105 duration-200 shadow-lg">
                             <div class="text-gray-300 text-[12px] px-2 truncate">
-                                {{ $device['device_name'] ?? '-' }}
-                            </div>
-                            <div class="text-gray-300 text-[12px] px-2 truncate">
                                 {{ $device['point_code'] ?? '-' }}
                             </div>
                             <div class="text-gray-300 text-[12px] px-2 truncate">
-                                {{ $device['group_name'] ?? '-' }}
+                                {{ $device['address'] ?? '-' }}
                             </div>
                             <div class="text-white text-[12px] px-2 truncate mt-2">
                                 {{ $device['sensor_name'] ?? '-' }}
                             </div>
                             <div class="pb-6 text-center text-[24px] text-[#E94F07]">
                                 {{ $device['value'] ?? '-' }} {{ $device['unit'] ?? '-' }}
-                            </div>
-                            <div class="text-gray-300 text-[12px] px-2 truncate">
-                                Updated At <br>
-                                {{ $device['updated_at'] ? \Carbon\Carbon::parse($device['updated_at'])->format('d-m-Y H:i:s') : '-' }}
                             </div>
                         </a>
                         @endforeach

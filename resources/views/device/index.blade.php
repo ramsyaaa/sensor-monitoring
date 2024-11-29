@@ -81,7 +81,7 @@
                         <td class="py-3 px-6 text-left flex flex-col gap-1 items-start">
                             <span class="text-[16px] font-bold">${item.device_name ?? '-'}</span>
                             <span>${item.point_code ?? '-'}</span>
-                            <span>${item.group_name ?? '-'}</span>
+                            <span>${item.city_name ?? '-'}</span>
                         </td>
                         <td class="py-3 px-6">
                             <div class="px-2 py-1 text-center text-white rounded-lg shadow-lg ${item.is_line === 1 ? 'bg-green-500' : 'bg-red-500'}">
