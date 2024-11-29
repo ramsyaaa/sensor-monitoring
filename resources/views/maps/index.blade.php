@@ -207,6 +207,7 @@
         }
 
 
+        let debounceTimeout;
         var searchInput = document.getElementById('deviceSearch');
 
         // Fungsi untuk melakukan pencarian perangkat
