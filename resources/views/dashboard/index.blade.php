@@ -15,6 +15,19 @@
                 </div>
 
                 <div class="overflow-x-auto bg-white px-6 py-10 rounded-lg shadow-lg">
+                    <div class="container mx-auto mb-4">
+                        <h1 class="text-2xl font-bold text-center mb-6">Device Overview</h1>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            @foreach ($data_overview_device as $index => $data)
+                            <div class="bg-white shadow-lg rounded-lg p-6 text-center">
+                                <h2 class="text-lg font-bold text-gray-700">Total Online {{ $index }}</h2>
+                                <p class="text-2xl font-bold text-blue-500 mt-2">{{ $data['active'] }} / {{ $data['total'] }}</p>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+
                     @foreach ($all_devices as $key => $group)
                     <div class="flex flex-col gap-4 mb-8 p-4 bg-gray-200 rounded-lg shadow-lg">
                         <div class="font-bold text-[16px]">

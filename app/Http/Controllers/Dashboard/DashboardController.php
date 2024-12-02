@@ -30,11 +30,18 @@ class DashboardController extends Controller
             $response_data = $responseJson['data'];
 
             $allDevice = [];
+            $dataOverviewDevice = [];
             foreach ($response_data as $index => $groups) {
                 foreach ($groups as $index2 => $group) {
                     $allDevice[$index2] = [];
+                    $dataOverviewDevice[$index2] = [
+                        "active" => 0,
+                        "total" => 0,
+                    ];
                     foreach ($group as $index3 => $device) {
                         if(isset($device['sensor_id']) && $device['sensor_id'] != null && $device['is_line'] == 1){
+                            $dataOverviewDevice[$index2]["active"] += 1;
+                            $dataOverviewDevice[$index2]["total"] += 1;
                             $jsonData = [
                                 'userId' => 99837,
                                 'sensorId' => intval($device['sensor_id']),
@@ -69,6 +76,7 @@ class DashboardController extends Controller
                                 return back()->withErrors('Gagal mengambil data dari API: ' . $response->body());
                             }
                         }else{
+                            $dataOverviewDevice[$index2]["total"] += 1;
                             $allDevice[$index2][] = [
                                 "device_id" => $device['id'],
                                 'device_name' => $device['device_name'],
@@ -85,8 +93,22 @@ class DashboardController extends Controller
                     }
                 }
             }
+            
+            $nationalActive = 0;
+            $nationalTotal = 0;
+            
+            foreach ($dataOverviewDevice as $city => $values) {
+                $nationalActive += $values['active'];
+                $nationalTotal += $values['total'];
+            }
+            
+            $dataOverviewDevice['Nasional'] = [
+                "active" => $nationalActive,
+                "total" => $nationalTotal,
+            ];
 
             $data['all_devices'] = $allDevice;
+            $data['data_overview_device'] = $dataOverviewDevice;
 
             return view('dashboard.index', $data);
         } else {
