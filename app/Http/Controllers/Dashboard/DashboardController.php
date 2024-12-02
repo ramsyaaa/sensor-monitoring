@@ -102,7 +102,7 @@ class DashboardController extends Controller
                 $nationalTotal += $values['total'];
             }
             
-            $dataOverviewDevice['Nasional'] = [
+            $dataOverviewDevice['DKI Jakarta'] = [
                 "active" => $nationalActive,
                 "total" => $nationalTotal,
             ];
