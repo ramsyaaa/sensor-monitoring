@@ -90,6 +90,21 @@ class DeviceController extends Controller
             $data = $response->json(); // Mengambil data dari response
             $data = $data['data'];
             $sensors = $data['device']['sensorsList'];
+
+            $response = Http::timeout(20)->withoutVerifying()
+                ->withHeaders([
+                    'Authorization' => 'Bearer ' . $token,
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json',
+                ])
+                ->post(env('URL_API') . '/api/v1/geomapping/device-detail', ["deviceId" => intval($id)]);
+
+            // Cek apakah response berhasil
+            if ($response->successful()) {
+                $response_data_api = $response->json(); // Mengambil response_data_api dari response
+                $response_data_api = $response_data_api['data'][0];
+                $data = array_merge($data, $response_data_api);
+            }
             if(isset($_GET['from_map'])){
                 return view('maps.show', compact('data', 'sensors'));
             }

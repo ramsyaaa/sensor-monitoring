@@ -5,9 +5,9 @@
 
     <div class="overflow-x-auto bg-white px-6 pb-10 rounded-lg shadow-lg">
         <div class="py-5 font-bold text-[20px]">
-            Device ID:{{ $data['device']['id'] }} <br>
             Device Name: {{$data['device']['deviceName']}}<br>
-            Device Number: {{$data['device']['deviceNo']}}<br>
+            Point Code: {{$data['point_code']}}<br>
+            Address: {{$data['address']}}<br>
             {{-- <strong>Address:</strong> {{$data['device']['address']}}<br>
             <strong>Point Code:</strong> {{$data['device']['point_code']}}<br>
             <strong>Location Info:</strong> {{$data['device']['location_information']}}<br>

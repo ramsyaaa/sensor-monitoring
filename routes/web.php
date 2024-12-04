@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Device\DeviceController as DeviceDeviceController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Dashboard\ApiDashboardController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Device\DeviceController;
 use App\Http\Controllers\Map\MapController;
@@ -26,6 +27,7 @@ Route::middleware([CheckSession::class])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('devices/list', [DeviceDeviceController::class, 'getDeviceList'])->name('api.device.list');
+    Route::get('api/dashboard', [ApiDashboardController::class, 'getDashboard'])->name('api.dashboard');
     
     Route::get('devices', [DeviceController::class, 'index'])->name('device.index');
     Route::get('devices/create', [DeviceController::class, 'create'])->name('device.create');
