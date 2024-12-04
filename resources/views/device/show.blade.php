@@ -28,12 +28,14 @@
                     </div>
                 </div>
                 <div class="overflow-x-auto bg-white px-6 pb-10 rounded-lg shadow-lg">
-                    <div class="flex gap-2 items-center">
+                    <div class="flex flex-col gap-2 mt-4 items-start">
                         <div class="hover:scale-105 duration-200">
                             <a href="{{ route('device.index') }}" class="px-4 py-2 rounded-lg text-white bg-red-500 shadow-lg">Back</a>
                         </div>
                         <div class="py-5 font-bold text-[20px]">
-                            Device ID:{{ $data['device']['id'] }}
+                            Device Name:{{ $data['device']['deviceName'] }} <br>
+                            Point Code: {{$data['point_code']}}<br>
+                            Address: {{$data['address']}}<br>
                         </div>
                     </div>
                     <table class="min-w-full border border-gray-300 rounded-lg shadow-md">

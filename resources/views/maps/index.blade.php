@@ -68,8 +68,7 @@
         }
 
         window.onload = function () {
-            var devices = {!! json_encode($allDevices) !!};
-            initializeMap(devices);
+            searchDevices();
         };
 
         // Variabel global untuk menyimpan instance peta
@@ -136,46 +135,9 @@
                                 <strong>Address:</strong> ${device.address}<br>
                                 <strong>Point Code:</strong> ${device.point_code}<br>
                                 <strong>Location Info:</strong> ${device.location_information}<br>
-                                 <strong>Water Level:</strong><br>
-                                 <div class="flex items-center justify-between">
-                                    <div class="w-1/3 justify-center flex items-center gap-2">
-                                        <div class="h-[7px] w-[7px] rounded-full bg-green-500">
-                                        </div>
-                                        <div>
-                                            Safe
-                                        </div>
-                                    </div>
-                                    <div class="w-1/3 justify-center flex items-center gap-2">
-                                        <div class="h-[7px] w-[7px] rounded-full bg-yellow-500">
-                                        </div>
-                                        <div>
-                                            Warning
-                                        </div>
-                                    </div>
-                                    <div class="w-1/3 justify-center flex items-center gap-2">
-                                        <div class="h-[7px] w-[7px] rounded-full bg-red-500">
-                                        </div>
-                                        <div>
-                                            Danger
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="relative w-full h-[10px] mt-2">
-                                    <div class="w-full flex items-center">
-                                        <div class="w-1/3 bg-green-500 h-[10px]">
-
-                                        </div>
-                                        <div class="w-1/3 bg-yellow-500 h-[10px]">
-
-                                        </div>
-                                        <div class="w-1/3 bg-red-500 h-[10px]">
-
-                                        </div>
-                                    </div>
-                                    <div class="h-[10px] w-[3px] absolute left-[10%] top-0 bg-white">
-
-                                    </div>
-                                </div>
+                                <strong>Water Level:</strong>${device.sensors.water_level} ${device.sensors.unit_water_level}<br>
+                                <strong>Flow Meter:</strong>${device.sensors.flow_meter} ${device.sensors.unit_flow_meter}<br>
+                                <strong>Debit:</strong>${device.sensors.instantaneous_flow} ${device.sensors.unit_instantaneous_flow}<br>
                             </div>
                         `;
 

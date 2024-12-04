@@ -40,7 +40,7 @@
         <div class="bg-white p-10 rounded shadow-lg relative w-full lg:w-3/4 flex flex-col h-screen overflow-hidden">
             <button onclick="closeChartPopup()" class="absolute top-2 right-2 text-gray-700">✕</button>
 
-            <div class="md:flex items-end mb-4">
+            <div class="md:flex items-end mb-4 w-full justify-center">
                 <!-- Filter Section -->
                 <div class="mr-4 flex flex-col gap-2">
                     <label for="startDate">Start Date:</label>
@@ -54,9 +54,9 @@
             </div>
             
             <div class="md:flex">
-                <div class="w-full md:w-2/3 max-w-full">
-                    <div class="overflow-auto max-h-60 mb-4">
-                        <table class="min-w-full border-collapse border border-gray-300 mt-4">
+                <div class="w-full md:w-1/2 max-w-full">
+                    <div class="overflow-auto h-80">
+                        <table class="min-w-full border-collapse border border-gray-300">
                             <thead>
                                 <tr>
                                     <th class="border border-gray-300 px-4 py-2">Date</th>
@@ -66,11 +66,10 @@
                             <tbody id="dataTableBody"></tbody>
                         </table>
                     </div>
-                    <div class="pagination mb-4" id="pagination"></div>
                 </div>
 
                 <!-- Summary Section -->
-                <div class="summary-container w-full md:w-1/3 ml-4">
+                <div class="summary-container w-full md:w-1/2 ml-4 h-80">
                     <h3 class="text-lg font-semibold mb-2">Summary</h3>
                     <table class="min-w-full border-collapse border border-gray-300">
                         <thead>
@@ -104,8 +103,7 @@
                     </table>
                 </div>
             </div>
-
-            <div class="pagination mb-4" id="pagination"></div> <!-- Pagination Container -->
+            <div class="pagination mb-4" id="pagination"></div>
 
             <!-- Chart Container -->
             <div id="chartContainer" style="height: 370px; width: 100%;"></div>
