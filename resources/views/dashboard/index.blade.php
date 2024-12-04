@@ -97,7 +97,7 @@
 
         function getDashboard() {
             $.ajax({
-                url: "{{ route('api.dashboard') }}",
+                url: "/api/dashboard",
                 method: "GET",
                 dataType: "json",
                 headers: {
