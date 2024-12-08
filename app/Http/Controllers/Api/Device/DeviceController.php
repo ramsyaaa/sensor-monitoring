@@ -40,71 +40,13 @@ class DeviceController extends Controller
 
             foreach ($data['allDevices'] as $index => $single_device) {
                 $device[$index]['sensors'] = [
-                    "flow_meter" => 0,
+                    "flow_meter" => $single_device['flow_velocity_value'],
                     "unit_flow_meter" => "m/s",
-                    "water_level" => 0,
+                    "water_level" => $single_device['water_level_value'],
                     "unit_water_level" => 'm',
-                    'instantaneous_flow' => 0,
+                    'instantaneous_flow' => $single_device['instantaneous_flow_value'],
                     "unit_instantaneous_flow" => "m³/s",
                 ];
-                // if($single_device['is_line'] == 1){
-                //     $response = Http::timeout(20)->withoutVerifying()
-                //         ->withHeaders([
-                //             'Authorization' => 'Bearer ' . $token,
-                //             'Accept' => 'application/json',
-                //             'Content-Type' => 'application/json',
-                //         ])
-                //         ->post(env('URL_API') . '/api/v1/get-single-device', [
-                //             "userId" => 99837,
-                //             "deviceId" => intval($single_device['id']),
-                //             "currPage" => 1,
-                //             "pageSize" => 10
-                //         ]);
-
-                //     if ($response->successful()) {
-                //         $data_response = $response->json();
-                //         $sensors = $data_response['data']['device']['sensorsList'];
-
-                //         $device[$index]['sensors'] = [
-                //             "flow_meter" => 0,
-                //             "unit_flow_meter" => "m/s",
-                //             "water_level" => 0,
-                //             "unit_water_level" => 'm',
-                //             'instantaneous_flow' => 0,
-                //             "unit_instantaneous_flow" => "m³/s",
-                //         ];
-
-                //         foreach ($sensors as $key => $sensor) {
-                //             if($sensor['sensorName'] == "Flow velocity"){
-                //                 $device[$index]['sensors']["flow_meter"] = $sensor["value"];
-                //             }
-                //             if($sensor['sensorName'] == "Water level"){
-                //                 $device[$index]['sensors']["water_level"] = $sensor["value"];
-                //             }
-                //             if($sensor['sensorName'] == "Instantaneous flow"){
-                //                 $device[$index]['sensors']["instantaneous_flow"] = $sensor["value"];
-                //             }
-                //         }
-                //     }else{
-                //         $device[$index]['sensors'] = [
-                //             "flow_meter" => 0,
-                //             "unit_flow_meter" => "m/s",
-                //             "water_level" => 0,
-                //             "unit_water_level" => 'm',
-                //             'instantaneous_flow' => 0,
-                //             "unit_instantaneous_flow" => "m³/s",
-                //         ];
-                //     }
-                // }else{
-                //     $device[$index]['sensors'] = [
-                //         "flow_meter" => 0,
-                //         "unit_flow_meter" => "m/s",
-                //         "water_level" => 0,
-                //         "unit_water_level" => 'm',
-                //         'instantaneous_flow' => 0,
-                //         "unit_instantaneous_flow" => "m³/s",
-                //     ];
-                // }
             }
 
             if($from_api == 1){
