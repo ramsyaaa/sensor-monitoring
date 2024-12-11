@@ -15,7 +15,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <link rel="stylesheet" href="{{ asset('asset/css/style.css') }}">
-    <title>Sensor Monitoring - {{ $title ?? '' }}</title>
+    <title>Sensor Monitoring</title>
 
     <style>
         body {
@@ -34,6 +34,10 @@
 
         .hide-scrollbar::-webkit-scrollbar {
             display: none; /* Menyembunyikan scrollbar untuk Chrome, Safari, dan Opera */
+        }
+
+        .canvasjs-chart-credit {
+            display: none !important;
         }
     </style>
 </head>

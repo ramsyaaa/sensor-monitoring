@@ -17,17 +17,18 @@ class LoginController extends Controller
     {
         // Validasi input
         $request->validate([
-            'username' => 'required',
+            'username' => 'required|in:bpbd,superadmin',
             'password' => 'required|min:8',
         ], [
             'username.required' => 'Username wajib diisi.',
+            'username.in' => 'Username atau password tidak sesuai.',
             'password.required' => 'Password wajib diisi.',
             'password.min' => 'Password minimal 8 karakter.',
         ]);
 
         // Data login dalam format JSON
         $credentials = [
-            'username' => $request->username,
+            'username' => 'bpbd',
             'password' => $request->password,
         ];
 
@@ -39,6 +40,12 @@ class LoginController extends Controller
         if ($response->ok() && isset($response->json()['data'])) {
             $data = $response->json()['data'];
 
+            $role = 'visitor';
+
+            if($request->username == 'superadmin'){
+                $role = "admin";
+            }
+
             // Simpan token dan data pengguna di session dengan timestamp
             session([
                 'access_token' => $data['access_token'],
@@ -48,6 +55,7 @@ class LoginController extends Controller
                 'refresh_token' => $data['refresh_token'],
                 'scope' => $data['scope'],
                 'userId' => $data['userId'],
+                'role' => $role,
                 'login_time' => now(), // Menyimpan waktu login
             ]);
 

@@ -113,12 +113,12 @@
                         const position = [parseFloat(device.lat), parseFloat(device.lng)];
 
                         // Tentukan ikon berdasarkan sumber data
-                        const iconUrl = '{{ asset('asset/img/Icon/router_12068565.png') }}';
+                        const iconUrl = '{{ asset('asset/img/Icon/devices.png') }}';
 
                         // Konfigurasi ikon marker
                         const icon = L.icon({
                             iconUrl: iconUrl,
-                            iconSize: [32, 32],
+                            iconSize: [24, 24],
                             iconAnchor: [16, 32]
                         });
 
