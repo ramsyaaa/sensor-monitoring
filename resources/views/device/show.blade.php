@@ -76,10 +76,16 @@
                                             class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200 flex items-center gap-2">
                                             <i class="fas fa-chart-line"></i>
                                         </a>
+                                        @php
+                                            $role = session('role');
+                                        @endphp
+
+                                        @if ($role === 'admin')
                                         <a title="Edit Sensor" href="{{ route('sensor.edit', ['id' => $sensor['id'], 'device' => $data['device']['id'] ]) }}" 
                                             class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200 flex items-center gap-2">
                                             <i class="fas fa-edit"></i>
                                         </a>
+                                        @endif
 
                                     </div>
                                 </td>

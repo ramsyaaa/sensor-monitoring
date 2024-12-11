@@ -73,6 +73,8 @@
     
             const tableBody = document.getElementById("data-body");
             tableBody.innerHTML = "";
+
+            const userRole = "{{ session('role') }}";
     
             paginatedData.forEach((item, index) => {
                 const row = `
@@ -94,11 +96,14 @@
                             <span>ID: ${item.id ?? '-'}</span>
                         </td>
                         <td class="py-3 px-6 text-center flex items-center justify-center gap-2">
+                            ${userRole === 'admin' ? `
                             <a title="Edit Device" href="/devices/${item.id ?? ''}/edit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-opacity-90 transition duration-200">
                                 <i class="fas fa-edit"></i>
                             </a>
+                            ` : ''}
                             <a title="Sensor List" href="/devices/${item.id ?? ''}" class="bg-[#083C76] text-white px-4 py-2 rounded hover:bg-opacity-90 transition duration-200">
                                 <i class="fas fa-list"></i>
+                            </a>
                         </td>
                     </tr>
                 `;

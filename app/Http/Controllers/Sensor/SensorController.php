@@ -67,6 +67,13 @@ class SensorController extends Controller
         if (!$token) {
             return redirect()->route('login')->withErrors('Token tidak ditemukan atau sudah kedaluwarsa.');
         }
+        
+        $role = session('role');
+
+        if($role != 'admin'){
+            return abort(403);
+        }
+
         $data['id'] = $id;
         $data['device_id'] = $request->device ?? null;
         $data['sensor'] = [];
@@ -100,6 +107,12 @@ class SensorController extends Controller
     }
 
     public function update(Request $request, $id){
+        $role = session('role');
+
+        if($role != 'admin'){
+            return abort(403);
+        }
+
         $request->validate([
             'longitude' => 'required',
             'latitude' => 'required',

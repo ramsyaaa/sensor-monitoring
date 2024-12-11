@@ -76,8 +76,8 @@
                         <script>
                             document.addEventListener("DOMContentLoaded", function () {
                                 // Mengambil data latitude dan longitude dari variabel PHP
-                                let initialLat = {{ $sensor['lat'] ?? '' }}; // Ganti dengan latitude yang sesuai
-                                let initialLng = {{ $sensor['lng'] ?? '' }}; // Ganti dengan longitude yang sesuai
+                                let initialLat = "{{ $sensor['lat'] ?? '-6.9175' }}"; // Ganti dengan latitude yang sesuai
+                                let initialLng = "{{ $sensor['lng'] ?? '107.6191' }}"; // Ganti dengan longitude yang sesuai
                         
                                 // Inisialisasi peta menggunakan Leaflet
                                 var map = L.map('map').setView([initialLat, initialLng], 17);
