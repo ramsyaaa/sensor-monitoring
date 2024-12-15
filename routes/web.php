@@ -6,6 +6,7 @@ use App\Http\Controllers\Dashboard\ApiDashboardController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Device\DeviceController;
 use App\Http\Controllers\Map\MapController;
+use App\Http\Controllers\Report\ReportController;
 use App\Http\Controllers\Sensor\SensorController;
 use App\Http\Controllers\Territory\TerritoryController;
 use App\Http\Middleware\CheckSession;
@@ -39,6 +40,14 @@ Route::middleware([CheckSession::class])->group(function () {
     Route::put('sensors/{id}/update', [SensorController::class, 'update'])->name('sensor.update');
 
     Route::get('maps', [MapController::class, 'index'])->name('map.index');
+
+    Route::get('reports', [ReportController::class, 'index'])->name('report.index');
+    Route::get('reports/download/{id}', [ReportController::class, 'download'])->name('report.download');
+    Route::get('reports/list', [ReportController::class, 'reportList'])->name('report.reportList');
+    Route::get('reports/{id}/create', [ReportController::class, 'create'])->name('report.create');
+    Route::post('reports/{id}', [ReportController::class, 'store'])->name('report.store');
+
+    
 
     Route::get('territory/district/{city_id}', [TerritoryController::class, 'getDistrict'])->name('map.getDistrict');
     Route::get('territory/subdistrict/{city_id}', [TerritoryController::class, 'getSubdistrict'])->name('map.getSubdistrict');

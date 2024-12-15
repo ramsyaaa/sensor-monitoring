@@ -137,19 +137,36 @@
                             });
 
                             // Iterasi devices
-                            $.each(group, function(index, device) {console.log(device.point_code)
+                            $.each(group, function(index, device) {
                                 const $deviceLink = $('<a>', {
                                     href: `{{ route('device.show', ['id' => ':id']) }}`.replace(":id", device.id),
                                     class: (device.is_line === 1 ? 'bg-[#083C76]' : 'bg-gray-500') + ' py-2 rounded cursor-pointer hover:scale-105 duration-200 shadow-lg'
                                 });
 
-                                const $pointCode = $('<div>', {
-                                    class: 'text-gray-300 text-[12px] px-2 truncate',
-                                    text: device.point_code || '-'
+                                const $deviceInfo = $('<div>', {
+                                    class: 'text-gray-300 text-[12px] px-2 flex truncate'
                                 });
 
+                                const $pointCode = $('<div>', {
+                                    class: '',
+                                    text: device.point_code + ', ' || '-'
+                                });
+
+                                const $districtName = $('<div>', {
+                                    class: '',
+                                    text: device.district_name + ', ' || '-'
+                                });
+
+                                const $subdistrictName = $('<div>', {
+                                    class: '',
+                                    text: device.subdistrict_name || '-'
+                                });
+
+                                // Menambahkan elemen-elemen ke dalam container
+                                $deviceInfo.append($pointCode, $districtName, $subdistrictName);
+
                                 const $address = $('<div>', {
-                                    class: 'text-gray-300 text-[12px] px-2 truncate',
+                                    class: 'text-gray-300 text-[11px] px-2 truncate',
                                     text: device.address || '-'
                                 });
 
@@ -162,12 +179,12 @@
                                 });
 
                                 const $flowVelocityName = $('<div>', {
-                                    class: 'text-white text-[8px] px-2 truncate mt-2',
+                                    class: 'text-white text-[10px] text-center px-2 mt-2 break-words whitespace-normal',
                                     text: device.flow_velocity_sensor_name || '-'
                                 });
 
                                 const $flowVelocityValue = $('<div>', {
-                                    class: 'pb-6 text-center text-[10px] text-[#E94F07]',
+                                    class: 'pb-6 text-center text-[14px] text-[#E94F07]',
                                     text: `${device.flow_velocity_value || '-'} ${device.flow_velocity_unit || '-'}`
                                 });
 
@@ -178,12 +195,12 @@
                                 });
 
                                 const $instantaneousSensorName = $('<div>', {
-                                    class: 'text-white text-[8px] px-2 truncate mt-2',
+                                    class: 'text-white text-[10px] text-center px-2 mt-2 break-words whitespace-normal',
                                     text: device.instantaneous_flow_sensor_name || '-'
                                 });
 
                                 const $instantaneousValue = $('<div>', {
-                                    class: 'pb-6 text-center text-[10px] text-[#E94F07]',
+                                    class: 'pb-6 text-center text-[14px] text-[#E94F07]',
                                     text: `${device.instantaneous_flow_value || '-'} ${device.instantaneous_flow_unit || '-'}`
                                 });
 
@@ -194,19 +211,19 @@
                                 });
 
                                 const $waterLevelSensorName = $('<div>', {
-                                    class: 'text-white text-[8px] px-2 truncate mt-2',
+                                    class: 'text-white text-[10px] text-center px-2 mt-2 break-words whitespace-normal',
                                     text: device.water_level_sensor_name || '-'
                                 });
 
                                 const $waterLevelValue = $('<div>', {
-                                    class: 'pb-6 text-center text-[10px] text-[#E94F07]',
+                                    class: 'pb-6 text-center text-[14px] text-[#E94F07]',
                                     text: `${device.water_level_value || '-'} ${device.water_level_unit || '-'}`
                                 });
 
                                 $divWaterLevel.append($waterLevelSensorName, $waterLevelValue);
 
                                 $sensorList.append($divWaterLevel, $divVelocity, $divInstantaneous);
-                                $deviceLink.append($pointCode, $address, $sensorList);
+                                $deviceLink.append($deviceInfo, $address, $sensorList);
                                 $deviceGrid.append($deviceLink);
                             });
 
