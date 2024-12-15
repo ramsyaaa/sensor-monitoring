@@ -7,6 +7,7 @@
             <a class="px-4 py-2 rounded-lg hover:bg-[#E94F07] hover:scale-110 duration-200 {{ request()->is('dashboard*') ? 'bg-[#E94F07] text-white' : '' }}" href="{{ route('dashboard') }}"><span class="block md:hidden"><i class="fas fa-tachometer-alt"></i></span><span class="hidden md:block">Dashboard</span></a>
             <a class="px-4 py-2 rounded-lg hover:bg-[#E94F07] hover:scale-110 duration-200 {{ request()->is('devices*') ? 'bg-[#E94F07] text-white' : '' }}" href="{{ route('device.index') }}"><span class="block md:hidden"><i class="fas fa-thermometer-half"></i></span><span class="hidden md:block">Devices</span></a>
             <a class="px-4 py-2 rounded-lg hover:bg-[#E94F07] hover:scale-110 duration-200 {{ request()->is('maps*') ? 'bg-[#E94F07] text-white' : '' }}" href="{{ route('map.index') }}"><span class="block md:hidden"><i class="fas fa-map-marker-alt"></i></span><span class="hidden md:block">Location</span></a>
+            <a class="px-4 py-2 rounded-lg hover:bg-[#E94F07] hover:scale-110 duration-200 {{ request()->is('reports*') ? 'bg-[#E94F07] text-white' : '' }}" href="{{ route('report.index') }}"><span class="block md:hidden"><i class="fa-solid fa-download"></i></span><span class="hidden md:block">Report</span></a>
         </div>
         <div class="flex items-center gap-4">
             <img @click="popupNavbar=!popupNavbar" src="{{ asset('asset/img/blank-profile.png') }}" class="w-[40px] rounded-full shadow-lg cursor-pointer" alt="">
