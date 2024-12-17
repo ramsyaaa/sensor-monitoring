@@ -5,9 +5,9 @@
 
     <div class="overflow-x-auto bg-white px-6 pb-10 rounded-lg shadow-lg">
         <div class="py-5 font-bold text-[20px]">
-            Device Name: {{$data['device']['deviceName']}}<br>
-            Point Code: {{$data['point_code']}}<br>
-            Address: {{$data['address']}}<br>
+            Device Name: {{$data[0]['device_name']}}<br>
+            Point Code: {{$data[0]['point_code']}}<br>
+            Address: {{$data[0]['address']}}<br>
             {{-- <strong>Address:</strong> {{$data['device']['address']}}<br>
             <strong>Point Code:</strong> {{$data['device']['point_code']}}<br>
             <strong>Location Info:</strong> {{$data['device']['location_information']}}<br>
@@ -25,35 +25,37 @@
                 </tr>
             </thead>
             <tbody class="text-gray-700 text-sm font-light">
-                @foreach ($sensors as $index => $sensor)
-                <tr class="border-b border-gray-200 hover:bg-gray-100">
-                    <td class="py-3 px-6 text-left">{{ $loop->iteration }}</td>
-                    <td class="py-3 px-6 flex gap-2 items-center">
-                        <div class="w-[10px] h-[10px] {{ $sensor['isLine'] == 1 ? 'bg-green-500' : 'bg-red-500' }} rounded-full">
-                        </div>
-                        <div class="text-left flex gap-4 items-start">
-                            <div>
-                                <img class="max-w-[40px]" src="{{ checkUrlIcon($sensor['sensorName']) }}" alt="">
+                @if ($sensors != null && count($sensors) > 0)
+                    @foreach ($sensors as $index => $sensor)
+                    <tr class="border-b border-gray-200 hover:bg-gray-100">
+                        <td class="py-3 px-6 text-left">{{ $loop->iteration }}</td>
+                        <td class="py-3 px-6 flex gap-2 items-center">
+                            <div class="w-[10px] h-[10px] {{ $sensor['is_line'] == 1 ? 'bg-green-500' : 'bg-red-500' }} rounded-full">
                             </div>
-                            <div>
-                                <span class="font-bold text-[16px]">{{ $sensor['sensorName'] }}</span>
-                                <br>
-                                <span class="text-[12px]">ID:{{ $sensor['id'] }}</span>
+                            <div class="text-left flex gap-4 items-start">
+                                <div>
+                                    <img class="max-w-[40px]" src="{{ checkUrlIcon($sensor['sensor_name']) }}" alt="">
+                                </div>
+                                <div>
+                                    <span class="font-bold text-[16px]">{{ $sensor['sensor_name'] }}</span>
+                                    <br>
+                                    <span class="text-[12px]">ID:{{ $sensor['id'] }}</span>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-left">
-                        <span class=" text-[20px]">{{ $sensor['value'] }} {{ $sensor['unit'] }}</span>
-                        <br>
-                        <span>Updated {{ $sensor['updateDate'] }}</span>
-                    </td>
-                    <td class="py-3 px-6">
-                        <div class="flex gap-2 justify-center">
-                            <a href="javascript:void(0)" onclick="getRealtime({{ $sensor['id'] }})" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200">RT / History Curv</a>
-                        </div>
-                    </td>
-                </tr>
-                @endforeach
+                        </td>
+                        <td class="py-3 px-6 text-left">
+                            <span class=" text-[20px]">{{ $sensor['value'] }} {{ $sensor['unit'] }}</span>
+                            <br>
+                            <span>Updated {{ $sensor['update_date'] }}</span>
+                        </td>
+                        <td class="py-3 px-6">
+                            <div class="flex gap-2 justify-center">
+                                <a href="javascript:void(0)" onclick="getRealtime({{ $sensor['id'] }})" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200">RT / History Curv</a>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                @endif
             </tbody>
         </table>
     </div>

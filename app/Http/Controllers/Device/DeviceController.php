@@ -70,10 +70,7 @@ class DeviceController extends Controller
 
         // Menyiapkan data JSON untuk dikirim
         $jsonData = [
-            'userId' => 99837,
-            "deviceId" => intval($id),
-            'currPage' => 1,
-            'pageSize' => 10,
+            "deviceID" => intval($id),
         ];
 
         // Mengirim permintaan POST ke API dengan JSON di body
@@ -83,13 +80,12 @@ class DeviceController extends Controller
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
             ])
-            ->post(env('URL_API') . '/api/v1/get-single-device', $jsonData);
+            ->post(env('URL_API') . '/api/v1/geomapping/device-detail', $jsonData);
 
         // Cek apakah response berhasil
         if ($response->successful()) {
             $data = $response->json(); // Mengambil data dari response
             $data = $data['data'];
-            $sensors = $data['device']['sensorsList'];
 
             $response = Http::timeout(20)->withoutVerifying()
                 ->withHeaders([
@@ -97,13 +93,12 @@ class DeviceController extends Controller
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
                 ])
-                ->post(env('URL_API') . '/api/v1/geomapping/device-detail', ["deviceId" => intval($id)]);
+                ->post(env('URL_API') . '/api/v1/geomapping/sensor-list', ["deviceId" => intval($id)]);
 
             // Cek apakah response berhasil
             if ($response->successful()) {
                 $response_data_api = $response->json(); // Mengambil response_data_api dari response
-                $response_data_api = $response_data_api['data'][0];
-                $data = array_merge($data, $response_data_api);
+                $sensors = $response_data_api['data'];
             }
             if(isset($_GET['from_map'])){
                 return view('maps.show', compact('data', 'sensors'));
