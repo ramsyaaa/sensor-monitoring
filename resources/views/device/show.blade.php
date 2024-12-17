@@ -33,9 +33,9 @@
                             <a href="{{ route('device.index') }}" class="px-4 py-2 rounded-lg text-white bg-red-500 shadow-lg">Back</a>
                         </div>
                         <div class="py-5 font-bold text-[20px]">
-                            Device Name:{{ $data['device']['deviceName'] }} <br>
-                            Point Code: {{$data['point_code']}}<br>
-                            Address: {{$data['address']}}<br>
+                            Device Name:{{ $data[0]['device_name'] }} <br>
+                            Point Code: {{$data[0]['point_code']}}<br>
+                            Address: {{$data[0]['address']}}<br>
                         </div>
                     </div>
                     <table class="min-w-full border border-gray-300 rounded-lg shadow-md">
@@ -48,49 +48,51 @@
                             </tr>
                         </thead>
                         <tbody class="text-gray-700 text-sm font-light">
-                            @foreach ($sensors as $index => $sensor)
-                            <tr class="border-b border-gray-200 hover:bg-gray-100 {{ $sensor['isLine'] == 0 ? 'text-gray-300' : 'text-black' }}">
-                                <td class="py-3 px-6 text-left">{{ $loop->iteration }}</td>
-                                <td class="py-3 px-6 flex gap-2 items-center">
-                                    <div class="w-[10px] h-[10px] {{ $sensor['isLine'] == 1 ? 'bg-green-500' : 'bg-red-500' }} rounded-full">
-                                    </div>
-                                    <div class="text-left flex gap-4 items-start">
-                                        <div>
-                                            <img class="max-w-[40px]" src="{{ checkUrlIcon($sensor['sensorName']) }}" alt="">
+                            @if ($sensors != null && count($sensors) > 0)
+                                @foreach ($sensors as $index => $sensor)
+                                <tr class="border-b border-gray-200 hover:bg-gray-100 {{ $sensor['is_line'] == 0 ? 'text-gray-300' : 'text-black' }}">
+                                    <td class="py-3 px-6 text-left">{{ $loop->iteration }}</td>
+                                    <td class="py-3 px-6 flex gap-2 items-center">
+                                        <div class="w-[10px] h-[10px] {{ $sensor['is_line'] == 1 ? 'bg-green-500' : 'bg-red-500' }} rounded-full">
                                         </div>
-                                        <div>
-                                            <span class="font-bold text-[16px]">{{ $sensor['sensorName'] }}</span>
-                                            <br>
-                                            <span class="text-[12px]">ID:{{ $sensor['id'] }}</span>
+                                        <div class="text-left flex gap-4 items-start">
+                                            <div>
+                                                <img class="max-w-[40px]" src="{{ checkUrlIcon($sensor['sensor_name']) }}" alt="">
+                                            </div>
+                                            <div>
+                                                <span class="font-bold text-[16px]">{{ $sensor['sensor_name'] }}</span>
+                                                <br>
+                                                <span class="text-[12px]">ID:{{ $sensor['id'] }}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-6 text-left">
-                                    <span class=" text-[20px]">{{ $sensor['value'] }} {{ $sensor['unit'] }}</span>
-                                    <br>
-                                    <span>Updated {{ $sensor['updateDate'] }}</span>
-                                </td>
-                                <td class="py-3 px-6">
-                                    <div class="flex gap-2 justify-center">
-                                        <a title="Realtime Curv" href="javascript:void(0)" onclick="getRealtime({{ $sensor['id'] }})" 
-                                            class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200 flex items-center gap-2">
-                                            <i class="fas fa-chart-line"></i>
-                                        </a>
-                                        @php
-                                            $role = session('role');
-                                        @endphp
+                                    </td>
+                                    <td class="py-3 px-6 text-left">
+                                        <span class=" text-[20px]">{{ $sensor['value'] }} {{ $sensor['unit'] }}</span>
+                                        <br>
+                                        <span>Updated {{ $sensor['update_date'] }}</span>
+                                    </td>
+                                    <td class="py-3 px-6">
+                                        <div class="flex gap-2 justify-center">
+                                            <a title="Realtime Curv" href="javascript:void(0)" onclick="getRealtime({{ $sensor['id'] }})" 
+                                                class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200 flex items-center gap-2">
+                                                <i class="fas fa-chart-line"></i>
+                                            </a>
+                                            @php
+                                                $role = session('role');
+                                            @endphp
 
-                                        @if ($role === 'admin')
-                                        <a title="Edit Sensor" href="{{ route('sensor.edit', ['id' => $sensor['id'], 'device' => $data['device']['id'] ]) }}" 
-                                            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200 flex items-center gap-2">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        @endif
+                                            @if ($role === 'admin')
+                                            <a title="Edit Sensor" href="{{ route('sensor.edit', ['id' => $sensor['id'], 'device' => $data[0]['id'] ]) }}" 
+                                                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200 flex items-center gap-2">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            @endif
 
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
