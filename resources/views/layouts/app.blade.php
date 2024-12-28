@@ -61,5 +61,27 @@
             });
         </script>
     @endif
+
+    <script>
+        function confirmDelete(url, idElement) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Data ini akan dihapus secara permanen!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Set the form action to the URL and submit the form
+                    const form = document.getElementById(idElement);
+                    form.action = url;
+                    form.submit();
+                }
+            });
+        }
+    </script>
 </body>
 </html>
