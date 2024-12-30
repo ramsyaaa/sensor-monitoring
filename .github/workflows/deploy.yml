@@ -46,7 +46,7 @@ jobs:
         run: |
           curl -s -X POST https://telebot.apicollection.my.id/api/v1/notification/send-message \
           -H "Content-Type: application/json" \
-          -d '{"message": "✅ Task Succeeded\n${{ github.event.head_commit.message }}\nMonitoring FE Deployed to Production\nBy: ${{ github.event.head_commit.committer.name }}", , "channel": "@cicd_sensor"}'
+          -d '{"message": "✅ Task Succeeded\n${{ github.event.head_commit.message }}\nMonitoring FE Deployed to Production\nBy: ${{ github.event.head_commit.committer.name }}", "channel": "@cicd_sensor"}'
       # 5. Cleanup
       - name: Remove SSH Key
         if: always()
