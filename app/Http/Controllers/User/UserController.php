@@ -114,6 +114,8 @@ class UserController extends Controller
             ])
             ->put(env('URL_API') . '/api/v1/user/edit/' . $id, $jsonData);
 
+            dd($response);
+
         // Cek apakah response berhasil
         if ($response->successful()) {
             return redirect(route('user.index'))->with('success', 'User password updated successfully!');
