@@ -95,6 +95,7 @@ class UserController extends Controller
     }
 
     public function update(Request $request, $id){
+        dd("123");
         $token = session('access_token'); // Ambil token dari session
 
         if (!$token) {
