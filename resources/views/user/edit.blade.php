@@ -4,7 +4,7 @@
 <div class="overflow-x-auto bg-white rounded-lg px-6 py-10 shadow-lg">
     <div>
         <div class="space-y-4">
-            <form action="{{ route('user.update', ['id' =>$id]) }}" method="POST">
+            <form action="{{ '/users/' . $id . '/update' }}" method="POST">
                 @csrf
                 <div class="flex flex-col md:flex-row gap-4 items-center">
                     <label for="username" class="font-semibold w-40">Username</label>
