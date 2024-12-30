@@ -95,7 +95,6 @@ class UserController extends Controller
     }
 
     public function update(Request $request, $id){
-        dd("123");
         $token = session('access_token'); // Ambil token dari session
 
         if (!$token) {
@@ -114,8 +113,6 @@ class UserController extends Controller
                 'Content-Type' => 'application/json',
             ])
             ->put(env('URL_API') . '/api/v1/user/edit/' . $id, $jsonData);
-
-            dd($response);
 
         // Cek apakah response berhasil
         if ($response->successful()) {

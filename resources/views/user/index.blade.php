@@ -55,7 +55,7 @@
                                     <button title="Edit User" onclick="showDetail('{{ $user['id'] }}', '{{ $user['username'] }}')" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-opacity-90 transition duration-200">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <a title="Sensor List" href="#" onclick="confirmDelete('{{ route('user.destroy', ['id' => $user['id']]) }}', 'delete-form')" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-opacity-90 transition duration-200">
+                                    <a title="Sensor List" href="#" onclick="confirmDelete('{{ '/users/' . $user['id'] }}', 'delete-form')" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-opacity-90 transition duration-200">
                                         <i class="fa fa-solid fa-trash"></i>
                                     </a>
                                     
