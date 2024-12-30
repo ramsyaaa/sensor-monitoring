@@ -6,7 +6,6 @@
         <div class="space-y-4">
             <form action="{{ route('user.update', ['id' =>$id]) }}" method="POST">
                 @csrf
-                @method('PUT')
                 <div class="flex flex-col md:flex-row gap-4 items-center">
                     <label for="username" class="font-semibold w-40">Username</label>
                     <div class="w-full flex flex-col gap-2">

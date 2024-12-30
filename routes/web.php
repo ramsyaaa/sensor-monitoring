@@ -50,10 +50,10 @@ Route::middleware([CheckSession::class])->group(function () {
 
     Route::get('users', [UserController::class, 'index'])->name('user.index');
     Route::post('users', [UserController::class, 'store'])->name('user.store');
-    Route::put('users/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::post('users/{id}/update', [UserController::class, 'update'])->name('user.update');
     Route::get('users/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::get('users/create', [UserController::class, 'create'])->name('user.create');
-    Route::delete('users/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::post('users/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
     Route::get('territory/district/{city_id}', [TerritoryController::class, 'getDistrict'])->name('map.getDistrict');
     Route::get('territory/subdistrict/{city_id}', [TerritoryController::class, 'getSubdistrict'])->name('map.getSubdistrict');

@@ -44,6 +44,7 @@
                             </tr>
                         </thead>
                         <tbody id="data-body" class="text-gray-700 text-sm font-light">
+                            @if($users != null && count($users) > 0)
                             @foreach ($users as $user)
                             <tr class="border-b border-gray-200 hover:bg-gray-100 ${item.is_line === 0 ? 'text-gray-300' : 'text-black'}">
                                 <td class="py-3 px-6 text-left">{{ $loop->iteration }}</td>
@@ -60,11 +61,11 @@
                                     
                                     <form id="delete-form" method="POST" style="display: none;">
                                         @csrf
-                                        @method('DELETE')
                                     </form>
                                 </td>
                             </tr>
                             @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
