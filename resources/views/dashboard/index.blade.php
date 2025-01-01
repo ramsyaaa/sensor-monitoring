@@ -70,8 +70,6 @@
                     "Accept": "application/json",
                 },
                 success: function(data) {
-                    console.log("Data fetched:", data);
-
                     // Pastikan data berhasil diambil
                     if (data.success) {
                         const $dashboardContent = $('#dashboard-content');

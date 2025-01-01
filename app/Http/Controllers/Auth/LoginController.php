@@ -48,7 +48,7 @@ class LoginController extends Controller
                 'expires_in' => $data['expires_in'],
                 'refresh_token' => $data['refresh_token'],
                 'scope' => $data['scope'],
-                'userId' => $data['userId'],
+                'userId' => $data['id'],
                 'role' => $role,
                 'login_time' => now(), // Menyimpan waktu login
             ]);
@@ -61,6 +61,22 @@ class LoginController extends Controller
         }
     }
 
+    public function refreshToken()
+    {
+        // Kirim permintaan ke API
+        $response = Http::timeout(20)->withoutVerifying()
+            ->post(env('URL_API') . '/api/v1/refresh-token');
+
+        // Cek apakah respons sukses
+        if ($response->ok() && isset($response->json()['data'])) {
+            $data = $response->json()['data'];
+
+            // Simpan token dan data pengguna di session dengan timestamp
+            session([
+                'access_token' => $data['access_token'],
+            ]);
+        }
+    }
 
 
     // Method untuk logout

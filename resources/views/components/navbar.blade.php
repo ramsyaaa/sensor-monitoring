@@ -16,6 +16,14 @@
             <img @click="popupNavbar=!popupNavbar" src="{{ asset('asset/img/blank-profile.png') }}" class="w-[40px] rounded-full shadow-lg cursor-pointer" alt="">
         </div>
         <div x-cloak @click.outside="popupNavbar=!popupNavbar" x-show="popupNavbar" style="z-index: 1000" class="absolute w-[200px] p-4 bg-white rounded-lg shadow-lg top-[50px] right-[20px]">
+            <div>
+                @php
+                    $role = session('role');
+                @endphp
+                @if($role == 'visitor')
+                <a href="{{ route('profile.index') }}" class="w-full flex items-center py-2 border-b border-gray-500 hover:scale-105 duration-300">Edit Profile</a>
+                @endif
+            </div>
             <form action="{{ route('auth.logout') }}" method="POST" class="w-full">
                 @csrf
                 <button type="submit" class="w-full flex justify-center items-center bg-red-600 text-white px-4 py-2 rounded-lg mt-4">Logout</button>

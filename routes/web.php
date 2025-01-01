@@ -6,6 +6,7 @@ use App\Http\Controllers\Dashboard\ApiDashboardController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Device\DeviceController;
 use App\Http\Controllers\Map\MapController;
+use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Report\ReportController;
 use App\Http\Controllers\Sensor\SensorController;
 use App\Http\Controllers\Territory\TerritoryController;
@@ -24,6 +25,7 @@ Route::middleware([RedirectIfAuthenticated::class])->group(function () {
 });
 
 Route::middleware([CheckSession::class])->group(function () {
+    Route::get('refresh-token', [LoginController::class, 'refreshToken'])->name('auth.refresh-token');
     Route::post('logout', [LoginController::class, 'logout'])->name('auth.logout');
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -54,6 +56,9 @@ Route::middleware([CheckSession::class])->group(function () {
     Route::get('users/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::get('users/create', [UserController::class, 'create'])->name('user.create');
     Route::post('users/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+
+    Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('profile', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::get('territory/district/{city_id}', [TerritoryController::class, 'getDistrict'])->name('map.getDistrict');
     Route::get('territory/subdistrict/{city_id}', [TerritoryController::class, 'getSubdistrict'])->name('map.getSubdistrict');
