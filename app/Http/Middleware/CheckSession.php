@@ -16,7 +16,7 @@ class CheckSession
     public function handle(Request $request, Closure $next): Response
     {
         // Cek apakah session token ada dan waktu sesi belum kedaluwarsa
-        if (!session('access_token') || session('login_time')->addSeconds(session('expires_in')) < now()) {
+        if (!session('access_token')) {
             // Hapus semua session jika token tidak ada atau sudah expired
             $request->session()->flush();
 

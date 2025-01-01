@@ -82,6 +82,17 @@
                 }
             });
         }
+
+        function refreshToken() {
+            fetch('{{ route("auth.refresh-token") }}', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+            });
+        }
+
+        setInterval(refreshToken, 300000);
     </script>
 </body>
 </html>
