@@ -26,9 +26,15 @@
             </thead>
             <tbody class="text-gray-700 text-sm font-light">
                 @if ($sensors != null && count($sensors) > 0)
+                    @php
+                        $i = 1;
+                    @endphp
                     @foreach ($sensors as $index => $sensor)
+                    @if($sensor['sensor_name'] == 'Atmosphere' || $sensor['sensor_name'] == 'Noise')
+                        @continue
+                    @endif
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
-                        <td class="py-3 px-6 text-left">{{ $loop->iteration }}</td>
+                        <td class="py-3 px-6 text-left">{{ $i }}</td>
                         <td class="py-3 px-6 flex gap-2 items-center">
                             <div class="w-[10px] h-[10px] {{ $sensor['is_line'] == 1 ? 'bg-green-500' : 'bg-red-500' }} rounded-full">
                             </div>
@@ -44,7 +50,7 @@
                             </div>
                         </td>
                         <td class="py-3 px-6 text-left">
-                            <span class=" text-[20px]">{{ $sensor['value'] }} {{ $sensor['unit'] }}</span>
+                            <span class=" text-[20px]">@if($sensor['sensor_name'] == 'Wind Direction') {{ getWindDirection($sensor['value']) }} @else {{ $sensor['value'] }} @endif {{ $sensor['unit'] }}</span>
                             <br>
                             <span>Updated {{ $sensor['update_date'] }}</span>
                         </td>
@@ -54,6 +60,9 @@
                             </div>
                         </td>
                     </tr>
+                    @php
+                        $i += 1;
+                    @endphp
                     @endforeach
                 @endif
             </tbody>
